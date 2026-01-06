@@ -1,0 +1,42 @@
+import Title from "@/components/ui/title"
+
+const data = {
+    "responseId": 54,
+    "formattedId": "HITL-054",
+    "category": "JE Posting",
+    "assigneddate": "2025-12-05",
+    "duedate": "2025-12-06"
+}
+export default function ApprovalDetails() {
+    return (
+        <div className="sticky top-0 z-50">
+            <Title intent="h6" className="pb-4 font-semibold">Approvals</Title>
+            <div className="flex gap-8 py-4 bg-white rounded-lg px-5">
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Reconciliation ID</div>
+                    <Title intent={"h5"} className="font-semibold">{data.formattedId}</Title>
+                </div>
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Category</div>
+                    <Title intent="h5" className="font-semibold">{data.category}</Title>
+                </div>
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Account Name</div>
+                    <Title intent="h5" className="font-semibold">Bank of America</Title>
+                </div>
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Account Type</div>
+                    <Title intent="h5" className="font-semibold">Operating Account</Title>
+                </div>
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Assigned Date</div>
+                    <Title intent="h5" className="font-semibold">{data.assigneddate}</Title>
+                </div>
+                <div>
+                    <div className="text-normal-gray text-mt-normal">Due Date</div>
+                    <Title intent="h5" className="font-semibold">{data.duedate}</Title>
+                </div>
+            </div>
+        </div>
+    )
+}
