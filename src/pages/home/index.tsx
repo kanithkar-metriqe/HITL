@@ -21,12 +21,12 @@ export default function Home() {
   return (
     <>
       <header className="flex justify-between sticky top-0 z-100 bg-white shadow">
+        <div>
+          <img src={metLogo} alt="Logo" className="h-12 p-5 py-1" />
+        </div>
         <div className="flex items-center px-5 gap-1">
           <HITLLogo className="h-8 w-8 text-mt-primary" />
           <span className="font-bold text-mt-primary">HITL Approval</span>
-        </div>
-        <div>
-          <img src={metLogo} alt="Logo" className="h-12 pr-5 py-1" />
         </div>
       </header>
       <div className="p-5 bg-neutral">

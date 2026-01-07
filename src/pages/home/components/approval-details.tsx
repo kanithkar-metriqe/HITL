@@ -20,28 +20,28 @@ export default function ApprovalDetails() {
     return (
         <div>
             <Title intent="h6" className="pb-4 font-semibold">Approvals</Title>
-            <div className="flex gap-8 py-4 bg-white rounded-lg px-5">
-                <div>
+            <div className="grid grid-cols-2 md:flex  gap-8 py-4 bg-white rounded-lg px-5">
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Reconciliation ID</div>
                     <Title intent={"h5"} className="font-semibold">{data.formattedId}</Title>
                 </div>
-                <div>
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Category</div>
                     <Title intent="h5" className="font-semibold">{data.category}</Title>
                 </div>
-                <div>
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Account Name</div>
                     <Title intent="h5" className="font-semibold">Bank of America</Title>
                 </div>
-                <div>
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Account Type</div>
                     <Title intent="h5" className="font-semibold">Operating Account</Title>
                 </div>
-                <div>
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Assigned Date</div>
                     <Title intent="h5" className="font-semibold">{data.assigneddate}</Title>
                 </div>
-                <div>
+                <div className="">
                     <div className="text-normal-gray text-mt-normal">Due Date</div>
                     <Title intent="h5" className="font-semibold">{data.duedate}</Title>
                 </div>

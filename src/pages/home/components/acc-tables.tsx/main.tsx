@@ -34,13 +34,11 @@ export default function Analysis() {
     return (
         <div className="py-5">
             <Title intent="h6" className="border-b pb-1 font-semibold">BR Agentic Intelligent Analysis</Title>
-            <div className="flex w-full gap-2 pt-3">
-                <div className="w-2/3 p-4">
-
+            <div className="xl:flex w-full gap-2 pt-3">
+                <div className="xl:w-2/3 md:p-4">
                     <AccordionWrapper items={data} />
                 </div>
-
-                <div className="rounded-md bg-white w-1/3 p-3">
+                <div className="rounded-md bg-white xl:w-1/3 p-3">
                     <div className="flex w-full gap-10 bg-mt-gray-680 rounded-md px-3 py-3">
                         <div>
                             <Title intent="h5">To:</Title>
