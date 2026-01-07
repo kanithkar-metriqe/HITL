@@ -1,4 +1,7 @@
-import Title from "@/components/ui/title"
+import Title from "@/components/ui/title";
+import { useQuery } from "@tanstack/react-query";
+import { getApprovalDetails } from "../services/approval-api";
+import { property_code } from "@/store/store";
 
 const data = {
     "responseId": 54,
@@ -7,9 +10,15 @@ const data = {
     "assigneddate": "2025-12-05",
     "duedate": "2025-12-06"
 }
+
 export default function ApprovalDetails() {
+    const { data: newdata, isLoading, error } = useQuery(
+        getApprovalDetails(property_code.value)
+    );
+
+    console.log(newdata)
     return (
-        <div className="sticky top-0 z-50">
+        <div>
             <Title intent="h6" className="pb-4 font-semibold">Approvals</Title>
             <div className="flex gap-8 py-4 bg-white rounded-lg px-5">
                 <div>

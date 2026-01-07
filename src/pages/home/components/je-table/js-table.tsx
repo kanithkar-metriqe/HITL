@@ -1,6 +1,9 @@
-import Title from "@/components/ui/title"
-import { journalEntryColumns, type JournalEntry } from "./journal-entry.columns"
-import { DataTable } from "./table"
+import Title from "@/components/ui/title";
+import { journalEntryColumns, type JournalEntry } from "./journal-entry.columns";
+import { DataTable } from "./table";
+import { useQuery } from "@tanstack/react-query";
+import { getJElDetails } from "../../services/je-details";
+import { property_code } from "@/store/store";
 
 const data = [
   {
@@ -27,6 +30,10 @@ const data = [
 
 
 export default function JETable() {
+  const { data: newdata, isLoading, error } = useQuery(
+    getJElDetails(property_code.value)
+  );
+  console.log(newdata)
   return (
     <div className="py-10">
       <Title intent="h6" className="font-semibold border-b pb-1 border-mt-border">Journal Entry</Title>

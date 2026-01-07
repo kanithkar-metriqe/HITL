@@ -1,14 +1,22 @@
-import Title from "@/components/ui/title"
+import Title from "@/components/ui/title";
+import { property_code } from "@/store/store";
+import { useQuery } from "@tanstack/react-query";
+import { getJElDetails } from "../services/je-details";
+import { getBankDetails } from "../services/bank-details";
 
 const data = {
-        "transaction_date": "2025-08-28",
-        "category": "Amex",
-        "description": "AMERICAN EXPRESS SETTLEMENT XXXXXX2463",
-        "bankname": "Starion Bank",
-        "ai_matched_gl": 1,
-        "amount": "$8,898"
-    } 
+    "transaction_date": "2025-08-28",
+    "category": "Amex",
+    "description": "AMERICAN EXPRESS SETTLEMENT XXXXXX2463",
+    "bankname": "Starion Bank",
+    "ai_matched_gl": 1,
+    "amount": "$8,898"
+}
 export default function BankDetails() {
+    const { data: newdata, isLoading, error } = useQuery(
+        getBankDetails(property_code.value)
+    );
+    console.log(newdata)
     return (
         <div className="pt-4">
             <Title intent="h6" className="font-semibold border-b pb-1 border-mt-border">Bank Details</Title>
@@ -32,12 +40,12 @@ export default function BankDetails() {
                     </div>
                     <div>
                         <div className="text-mt-normal text-normal-gray">AI Matched GL</div>
-                       <Title intent={"h5"} className="font-semibold">{data.ai_matched_gl}</Title>
+                        <Title intent={"h5"} className="font-semibold">{data.ai_matched_gl}</Title>
                     </div>
                 </div>
                 <div>
                     <div>Amount</div>
-                     <Title intent={"h6"} className="font-semibold">{data.amount}</Title>
+                    <Title intent={"h6"} className="font-semibold">{data.amount}</Title>
                 </div>
             </div>
         </div>

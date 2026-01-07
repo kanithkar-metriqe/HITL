@@ -52,6 +52,7 @@
 }
 
 @theme inline {
+  --color-mt-primary:#00a769;
   --color-blur: #f6f7fb;
   --color-mt-orange: #FFF2E7;
   --color-mt-orange-200: #E0731E;
