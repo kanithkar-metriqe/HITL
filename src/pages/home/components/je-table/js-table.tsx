@@ -21,7 +21,7 @@ const data = [
 
 
 export default function JETable() {
-  const { data: newdata, isLoading, error } = useQuery(
+  const { data: newdata } = useQuery(
     getJElDetails(property_code.value)
   );
   console.log(newdata)

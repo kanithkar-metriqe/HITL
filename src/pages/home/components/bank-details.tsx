@@ -1,19 +1,18 @@
 import Title from "@/components/ui/title";
 import { property_code } from "@/store/store";
 import { useQuery } from "@tanstack/react-query";
-import { getJElDetails } from "../services/je-details";
 import { getBankDetails } from "../services/bank-details";
 
-const data = {
-    "transaction_date": "2025-08-28",
-    "category": "Amex",
-    "description": "AMERICAN EXPRESS SETTLEMENT XXXXXX2463",
-    "bankname": "Starion Bank",
-    "ai_matched_gl": 1,
-    "amount": "$8,898"
-}
+// const data = {
+//     "transaction_date": "2025-08-28",
+//     "category": "Amex",
+//     "description": "AMERICAN EXPRESS SETTLEMENT XXXXXX2463",
+//     "bankname": "Starion Bank",
+//     "ai_matched_gl": 1,
+//     "amount": "$8,898"
+// }
 export default function BankDetails() {
-    const { data: newdata, isLoading, error } = useQuery(
+    const { data: newdata } = useQuery(
         getBankDetails(property_code.value)
     );
     console.log(newdata)

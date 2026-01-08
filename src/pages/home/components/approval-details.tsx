@@ -3,16 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getApprovalDetails } from "../services/approval-api";
 import { property_code } from "@/store/store";
 
-const data = {
-    "responseId": 54,
-    "formattedId": "HITL-054",
-    "category": "JE Posting",
-    "assigneddate": "2025-12-05",
-    "duedate": "2025-12-06"
-}
+// const data = {
+//     "responseId": 54,
+//     "formattedId": "HITL-054",
+//     "category": "JE Posting",
+//     "assigneddate": "2025-12-05",
+//     "duedate": "2025-12-06"
+// }
 
 export default function ApprovalDetails() {
-    const { data: newdata, isLoading, error } = useQuery(
+    const { data: newdata } = useQuery(
         getApprovalDetails(property_code.value)
     );
 
