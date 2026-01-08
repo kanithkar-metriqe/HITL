@@ -24,28 +24,28 @@ export default function BankDetails() {
                 <div className="grid grid-cols-2 md:flex gap-8">
                     <div>
                         <div className="text-mt-normal text-normal-gray">Transaction Date</div>
-                        <Title intent={"h5"} className="font-semibold">{data.transaction_date}</Title>
+                        <Title intent={"h5"} className="font-semibold">{newdata?.transaction_date}</Title>
                     </div>
                     <div>
                         <div className="text-mt-normal text-normal-gray">Category</div>
-                        <Title intent={"h5"} className="font-semibold">{data.category}</Title>
+                        <Title intent={"h5"} className="font-semibold">{newdata?.category}</Title>
                     </div>
                     <div>
                         <div className="text-mt-normal text-normal-gray">Description</div>
-                        <Title intent={"h5"} className="font-semibold">{data.description}</Title>
+                        <Title intent={"h5"} className="font-semibold">{newdata?.description}</Title>
                     </div>
                     <div>
                         <div className="text-mt-normal text-normal-gray">Bank Name</div>
-                        <Title intent={"h5"} className="font-semibold">{data.bankname}</Title>
+                        <Title intent={"h5"} className="font-semibold">{newdata?.bankname}</Title>
                     </div>
                     <div>
                         <div className="text-mt-normal text-normal-gray">AI Matched GL</div>
-                        <Title intent={"h5"} className="font-semibold">{data.ai_matched_gl}</Title>
+                        <Title intent={"h5"} className="font-semibold">{newdata?.ai_matched_gl}</Title>
                     </div>
                 </div>
                 <div>
                     <div>Amount</div>
-                    <Title intent={"h6"} className="font-semibold">{data.amount}</Title>
+                    <Title intent={"h6"} className="font-semibold">{newdata?.amount}</Title>
                 </div>
             </div>
         </div>

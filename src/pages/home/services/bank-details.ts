@@ -4,12 +4,17 @@ import { queryOptions } from "@tanstack/react-query";
 
 
 export type HitlCase = {
-  id: string;
-  status: string;
+  transaction_date: string;
+  category: string;
+  description: string;
+  stabanknametus: string;
+  bankname: string;
+  ai_matched_gl: string;
+  amount:string;
 };
 
 
-async function bankDetails(): Promise<HitlCase[]> {
+async function bankDetails(): Promise<HitlCase> {
 
   const payload = {
     property_code: property_code.value,

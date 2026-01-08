@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import GlTable from "./gl-table/gl-tablle";
 import MarchantTable from "./marchant-table/marchant-table";
 import PMSTable from "./pms-table.tsx/pms-table";
+import AgentDetails from "../agent-detail";
 
 const data = [
     {
@@ -38,27 +39,7 @@ export default function Analysis() {
                 <div className="xl:w-2/3 md:p-4">
                     <AccordionWrapper items={data} />
                 </div>
-                <div className="rounded-md bg-white xl:w-1/3 p-3">
-                    <div className="flex w-full gap-10 bg-mt-gray-680 rounded-md px-3 py-3">
-                        <div>
-                            <Title intent="h5">To:</Title>
-                            <span>Kanithkar Kumar</span>
-                        </div>
-                        <div>
-                            <Title intent="h5">CC:</Title>
-                            <span>Naveen, Gopi</span>
-                        </div>
-                    </div>
-                    <div className="mt-3 pt-2 pb-3 rounded-md px-3 bg-mt-gray-680">
-                        <Title intent="h5" className="pb-3">Email Content</Title>
-
-                        <p>There is a reconciliation discrepancy where the bank statement on 2025-08-01 reflects a credit of 2293.56, the merchant settlement amount is 2545.65, and the PMS-reported amount for the same date is 2733.61, indicating a clear mismatch between all three amounts and confirming an 'Unmatched - PMS to Merchant Variance' the most likely root cause is inconsistent reporting or processing between the merchant and PMS systems, and this issue is to be handled by the Concerned Team.</p>
-                    </div>
-                    <div className="pt-4 flex w-full justify-end">
-                        <Button variant="ghost" >Resubmit</Button>
-                        <Button variant="default" className="ml-3">Send Mail</Button>
-                    </div>
-                </div>
+                <AgentDetails />
             </div>
         </div>
     );

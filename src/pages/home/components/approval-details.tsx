@@ -16,6 +16,7 @@ export default function ApprovalDetails() {
         getApprovalDetails(property_code.value)
     );
 
+    
     console.log(newdata)
     return (
         <div>
@@ -23,11 +24,11 @@ export default function ApprovalDetails() {
             <div className="grid grid-cols-2 md:flex  gap-8 py-4 bg-white rounded-lg px-5">
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Reconciliation ID</div>
-                    <Title intent={"h5"} className="font-semibold">{data.formattedId}</Title>
+                    <Title intent={"h5"} className="font-semibold">{newdata?.formattedId}</Title>
                 </div>
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Category</div>
-                    <Title intent="h5" className="font-semibold">{data.category}</Title>
+                    <Title intent="h5" className="font-semibold">{newdata?.category}</Title>
                 </div>
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Account Name</div>
@@ -39,11 +40,11 @@ export default function ApprovalDetails() {
                 </div>
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Assigned Date</div>
-                    <Title intent="h5" className="font-semibold">{data.assigneddate}</Title>
+                    <Title intent="h5" className="font-semibold">{newdata?.assigneddate}</Title>
                 </div>
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Due Date</div>
-                    <Title intent="h5" className="font-semibold">{data.duedate}</Title>
+                    <Title intent="h5" className="font-semibold">{newdata?.duedate}</Title>
                 </div>
             </div>
         </div>

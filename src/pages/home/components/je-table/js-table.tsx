@@ -15,18 +15,9 @@ const data = [
     "taxRate": 252,
     "description": "This is a Sample Description from Bank",
     "netAmount": 1652
-  },
-  {
-    "id": "2",
-    "accountName": "21212-System Expenses",
-    "type": "Credit",
-    "amount": 400,
-    "taxCode": "",
-    "taxRate": 0,
-    "description": "This is a Sample Description from GL",
-    "netAmount": 1000
   }
 ]
+
 
 
 export default function JETable() {

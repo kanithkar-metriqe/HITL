@@ -4,12 +4,15 @@ import { queryOptions } from "@tanstack/react-query";
 
 
 export type HitlCase = {
-  id: string;
-  status: string;
+  responseId: string;
+  formattedId: string;
+  category:string;
+  assigneddate:string;
+  duedate:string;
 };
 
 
-async function approvalDetails(): Promise<HitlCase[]> {
+async function approvalDetails(): Promise<HitlCase> {
 
   const payload = {
     // property_code: property_code.value,
