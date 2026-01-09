@@ -2,57 +2,34 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 export type MerchantDetail = {
-  transactionDate: string;
-  submittedAmount: number;
-  settlementDate: string;
-  settlementAmount: number;
-  commission: number;
-  discounts: number;
-  fees: number;
+  date: string;
+  amount: string;
+  discount_amount: string;
+  fees_and_incentives: number;
+  fees: string;
 };
 
-export const merchantDetailsData: MerchantDetail[] = [
-  {
-    transactionDate: "01/15/2023",
-    submittedAmount: 3052,
-    settlementDate: "01/15/2023",
-    settlementAmount: 3052,
-    commission: 3052,
-    discounts: 3052,
-    fees: 3052,
-  },
-];
 
 export const merchantDetailsColumns: ColumnDef<MerchantDetail>[] = [
   {
-    accessorKey: "transactionDate",
+    accessorKey: "date",
     header: "Transaction Date",
     enableSorting: true,
   },
   {
-    accessorKey: "submittedAmount",
-    header: "Submitted Amount",
+    accessorKey: "amount",
+    header: "Amount",
     enableSorting: true,
   },
   {
-    accessorKey: "settlementDate",
-    header: "Settlement Date",
+    accessorKey: "discount_amount",
+    header: "Discount Amount",
     enableSorting: true,
   },
   {
-    accessorKey: "settlementAmount",
-    header: "Amount ($)",
+    accessorKey: "fees_and_incentives",
+    header: "Fees & Incentives",
     enableSorting: true,
-  },
-  {
-    accessorKey: "commission",
-    header: "Commission",
-    enableSorting: false,
-  },
-  {
-    accessorKey: "discounts",
-    header: "Discounts",
-    enableSorting: false,
   },
   {
     accessorKey: "fees",

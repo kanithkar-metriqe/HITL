@@ -3,46 +3,60 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 export type GLItem = {
-  transactionDate: string;
-  description: string;
-  amount: number;
+  account_date: string;
   category: string;
+  account_code: string;
+  account_name: string;
+  amount: number;
+  transaction_type: string;
 };
 
-export const glItemsData: GLItem[] = [
-  {
-    transactionDate: "01/15/2023",
-    description: "Service Charge",
-    amount: 3052,
-    category: "Cash Variances",
-  },
-  {
-    transactionDate: "02/20/2023",
-    description: "Capital electric bill",
-    amount: 800,
-    category: "Credit Cards Variances",
-  },
-];
+// export const glItemsData: GLItem[] = [
+//   {
+//     transactionDate: "01/15/2023",
+//     description: "Service Charge",
+//     amount: 3052,
+//     category: "Cash Variances",
+//   },
+//   {
+//     transactionDate: "02/20/2023",
+//     description: "Capital electric bill",
+//     amount: 800,
+//     category: "Credit Cards Variances",
+//   },
+// ];
 
 export const glItemsColumns: ColumnDef<GLItem>[] = [
   {
-    accessorKey: "transactionDate",
-    header: "Transaction Date",
+    accessorKey: "account_name",
+    header: "Account Name",
     enableSorting: true,
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "account_code",
+    header: "DescriptAccount Codeion",
     enableSorting: false,
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount ($)",
-    enableSorting: true,
   },
   {
     accessorKey: "category",
     header: "Category",
     enableSorting: true,
   },
+  {
+    accessorKey: "transaction_type",
+    header: "Transaction Type",
+    enableSorting: true,
+  },
+  {
+
+    accessorKey: "account_date",
+    header: "Account Date",
+    enableSorting: true,
+  },
+  {
+    accessorKey: "amount",
+    header: "Amount",
+    enableSorting: true,
+  },
 ];
+

@@ -5,17 +5,21 @@ import BankDetails from "./components/bank-details";
 import JETable from "./components/je-table/js-table";
 import metLogo from "../../../public/met-logo.png";
 import { useSearch } from "@tanstack/react-router";
-import { property_code, responseId } from "@/store/store";
+import { property_code, reqType, responseId } from "@/store/store";
 
 export default function Home() {
 
   const query = useSearch({ strict: false }) as {
     responseId?: string;
     property_code?: string;
+    type?: string;
   };
+
+
 
   responseId.value = query.responseId ?? "";
   property_code.value = query.property_code ?? "";
+  reqType.value = query.type ?? "";
 
 
   return (
@@ -29,10 +33,12 @@ export default function Home() {
           <span className="font-bold text-mt-primary">HITL Approval</span>
         </div>
       </header>
-      <div className="p-5 bg-neutral">
+      <div className="p-5 bg-neutral h-dvh">
         <ApprovalDetails />
         <BankDetails />
-        <JETable />
+        {
+          reqType.value === "JE" && <JETable />
+        }
         <Analysis />
       </div>
     </>

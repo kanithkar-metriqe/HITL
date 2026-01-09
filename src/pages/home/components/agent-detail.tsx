@@ -2,52 +2,89 @@ import { Button } from '@/components/ui/button'
 import Title from '@/components/ui/title'
 import { useQuery } from '@tanstack/react-query'
 import { getagentDetails } from '../services/agent-details'
-import { property_code } from '@/store/store'
+import { property_code, reqType } from '@/store/store'
+import { Input } from '@/components/ui/input'
+import { useState } from 'react'
+import { Label } from '@radix-ui/react-label'
+import { postreject } from '../services/reject'
+import { getsubmitState } from '../services/send-approve'
 
 export default function AgentDetails() {
+    const [resubmit, setResubmit] = useState("")
+    const [inputSubmit, setInputValue] = useState("")
+    const [inputStatus, setINputStatus] = useState(false)
+    const [submitStatus, setsubmitStatus] = useState("")
     const { data } = useQuery(getagentDetails(property_code.value))
-
+    const { data: newdata } = useQuery(getsubmitState(submitStatus))
+    console.log(newdata)
     const response = data
 
     const toUsers = response?.toemailusers ?? []
     const ccUsers = response?.ccemailusers ?? []
-    const emailMessage = response?.message ?? ''
+    const emailMessage = response?.message ?? '';
+
+    useQuery(
+        postreject(inputSubmit)
+    );
+
+    function handle() {
+        setInputValue(resubmit);
+        setResubmit("")
+        setINputStatus(false)
+    }
+
+    function handleSubmit() {
+        console.log("JSSSSS")
+        setsubmitStatus("JE")
+    }
+
+    const rejectValue = reqType.value === "JE" ? "Reject" : "Resubmit"
+    const approveValue = reqType.value === "JE" ? "Approve" : "Send Mail"
+
 
     return (
         <div className="rounded-md bg-white xl:w-1/3 p-3">
             {/* To & CC */}
-            <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
-                <div>
-                    <Title intent="h5">To:</Title>
-                    <span className='text-mt-normal'>
-                        {toUsers.map(u => u.email).join(', ') || '-'}
-                    </span>
-                </div>
+            {
+                reqType.value !== "JE" && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
+                    <div>
+                        <Title intent="h5">To:</Title>
+                        <span className='text-mt-normal'>
+                            {toUsers?.map(u => u.email).join(', ') || '-'}
+                        </span>
+                    </div>
 
-                <div>
-                    <Title intent="h5">CC:</Title>
-                    <span className='text-mt-normal'>
-                        {ccUsers.map(u => u.email).join(', ') || '-'}
-                    </span>
+                    <div>
+                        <Title intent="h5">CC:</Title>
+                        <span className='text-mt-normal'>
+                            {ccUsers?.map(u => u.email).join(', ') || '-'}
+                        </span>
+                    </div>
                 </div>
-            </div>
+            }
 
             {/* Email Content */}
             <div className="mt-3 pt-2 pb-3 rounded-md px-3 bg-mt-gray-680">
                 <Title intent="h5" className="pb-3">
-                    Email Content
+                    {reqType.value === "JE" ? "Analysis" : "Email Content"}
                 </Title>
 
                 <p className="text-sm leading-relaxed">
                     {emailMessage}
                 </p>
             </div>
-
-            {/* Actions */}
+            {
+                inputStatus && <div className='py-3 bg-white'>
+                    <Label htmlFor="resubmitReason" className='text-mt-normal pb-1 font-semibold block'>Enter Resubmit Reason</Label>
+                    <Input placeholder='Enter resubmit reason ' value={resubmit} onChange={(e) => setResubmit(e.target.value)} className='' />
+                </div>
+            }
             <div className="pt-4 flex w-full justify-end">
-                <Button variant="ghost">Resubmit</Button>
-                <Button variant="default" className="ml-3">
-                    Send Mail
+                {
+                    inputStatus === false ? <Button className="cursor-pointer transition-all" variant="ghost" onClick={() => setINputStatus(true)}>{rejectValue}</Button> : <Button className="cursor-pointer transition-all" variant="ghost" onClick={handle}>{rejectValue}</Button>
+                }
+                <Button variant="default" className="ml-3" onClick={handleSubmit}>
+                    {approveValue}
                 </Button>
             </div>
         </div>

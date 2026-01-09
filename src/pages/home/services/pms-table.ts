@@ -1,15 +1,11 @@
 import { HITL_API } from "@/lib/api";
 import {  property_code, responseId } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
+import type { PMSDetail } from "../components/acc-tables.tsx/pms-table.tsx/pms-column";
 
 
-export type HitlCase = {
-  date: string;
-  amount: string;
-};
 
-
-async function pmsTable(): Promise<HitlCase[]> {
+async function pmsTable(): Promise<PMSDetail[]> {
 
   const payload = {
     property_code: property_code.value,
@@ -26,7 +22,7 @@ async function pmsTable(): Promise<HitlCase[]> {
 
 export function getpmsTable(property_code: string) {
   return queryOptions({
-    queryKey: ["hitl-gl-details", property_code],
+    queryKey: ["hitl-pms-details", property_code],
     queryFn: pmsTable,
   });
 }

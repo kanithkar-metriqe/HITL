@@ -1,25 +1,21 @@
 import type { ColumnDef } from "@tanstack/react-table"
 
 export type JournalEntry = {
-  id: string
-  accountName: string
-  type: 'Debit' | 'Credit'
+  type: string
+  desc: string
   amount: number
-  taxCode: string
-  taxRate: number
-  description: string
-  netAmount: number
+  account: string
 }
 
 
 export const journalEntryColumns: ColumnDef<JournalEntry>[] = [
   {
-    accessorKey: 'accountName',
-    header: 'Account Name',
-  },
-  {
     accessorKey: 'type',
     header: 'Type',
+  },
+  {
+    accessorKey: 'desc',
+    header: 'Description',
   },
   {
     accessorKey: 'amount',
@@ -27,21 +23,7 @@ export const journalEntryColumns: ColumnDef<JournalEntry>[] = [
     cell: info => info.getValue<number>().toLocaleString(),
   },
   {
-    accessorKey: 'taxCode',
-    header: 'Tax Code',
-  },
-  {
-    accessorKey: 'taxRate',
-    header: 'Tax Rate',
-    cell: info => info.getValue<number>() || '-',
-  },
-  {
-    accessorKey: 'description',
-    header: 'Description',
-  },
-  {
-    accessorKey: 'netAmount',
-    header: 'Net Amount',
-    cell: info => info.getValue<number>().toLocaleString(),
+    accessorKey: 'account',
+    header: 'Account',
   },
 ]

@@ -1,6 +1,6 @@
 import { AccordionWrapper } from "@/components/ui/accordion-wrapper";
 import Title from "@/components/ui/title";
-import GlTable from "./gl-table/gl-tablle";
+import GlTable from "./gl-table/gl-table";
 import MarchantTable from "./marchant-table/marchant-table";
 import PMSTable from "./pms-table.tsx/pms-table";
 import AgentDetails from "../agent-detail";
@@ -31,8 +31,10 @@ const data = [
 ];
 
 export default function Analysis() {
+
     return (
         <div className="py-5">
+
             <Title intent="h6" className="border-b pb-1 font-semibold">BR Agentic Intelligent Analysis</Title>
             <div className="xl:flex w-full gap-2 pt-3">
                 <div className="xl:w-2/3 md:p-4">

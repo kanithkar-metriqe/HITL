@@ -1,15 +1,10 @@
 import { HITL_API } from "@/lib/api";
 import {  property_code, responseId } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
+import type { MerchantDetail } from "../components/acc-tables.tsx/marchant-table/marchant-column";
 
 
-export type HitlCase = {
-  id: string;
-  status: string;
-};
-
-
-async function merchntFunc(): Promise<HitlCase[]> {
+async function merchntFunc(): Promise<MerchantDetail[]> {
 
   const payload = {
     property_code: property_code.value,
@@ -26,7 +21,7 @@ async function merchntFunc(): Promise<HitlCase[]> {
 
 export function getMerchant(property_code: string) {
   return queryOptions({
-    queryKey: ["hitl-je-details", property_code],
+    queryKey: ["hitl-marchant-details", property_code],
     queryFn: merchntFunc,
   });
 }

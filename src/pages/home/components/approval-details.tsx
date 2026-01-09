@@ -30,14 +30,7 @@ export default function ApprovalDetails() {
                     <div className="text-normal-gray text-mt-normal">Category</div>
                     <Title intent="h5" className="font-semibold">{newdata?.category}</Title>
                 </div>
-                <div className="">
-                    <div className="text-normal-gray text-mt-normal">Account Name</div>
-                    <Title intent="h5" className="font-semibold">Bank of America</Title>
-                </div>
-                <div className="">
-                    <div className="text-normal-gray text-mt-normal">Account Type</div>
-                    <Title intent="h5" className="font-semibold">Operating Account</Title>
-                </div>
+                
                 <div className="">
                     <div className="text-normal-gray text-mt-normal">Assigned Date</div>
                     <Title intent="h5" className="font-semibold">{newdata?.assigneddate}</Title>

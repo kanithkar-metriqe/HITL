@@ -1,6 +1,7 @@
 import { HITL_API } from "@/lib/api";
 import {  property_code, responseId } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
+import type { GLItem } from "../components/acc-tables.tsx/gl-table/gl-column";
 
 
 export type HitlCase = {
@@ -13,7 +14,7 @@ export type HitlCase = {
 };
 
 
-async function glTable(): Promise<HitlCase[]> {
+async function glTable(): Promise<GLItem[]> {
 
   const payload = {
     property_code: property_code.value,

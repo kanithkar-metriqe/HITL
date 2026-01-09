@@ -1,5 +1,5 @@
 import { HITL_API } from "@/lib/api";
-import {  property_code, responseId } from "@/store/store";
+import { property_code } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
 
 
@@ -13,7 +13,7 @@ async function jelDetails(): Promise<HitlCase[]> {
 
   const payload = {
     property_code: property_code.value,
-    responseId: responseId.value,
+    responseId: 458,
   };
 
 

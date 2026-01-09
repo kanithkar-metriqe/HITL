@@ -1,3 +1,4 @@
+import { showToastMessage } from "@/components/ui/toast-utils";
 import { HITL_API } from "@/lib/api";
 import { responseId } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
@@ -12,7 +13,7 @@ export type HitlCase = {
 };
 
 
-async function approvalDetails(): Promise<HitlCase> {
+async function submitState(): Promise<HitlCase> {
 
   const payload = {
     // property_code: property_code.value,
@@ -21,17 +22,18 @@ async function approvalDetails(): Promise<HitlCase> {
 
 
   const { data } = await HITL_API.post(
-    "/fetchhitldata",
+    "/approveresponse",
     payload,)
-
-
+    showToastMessage({ message: "Approved Successfully", type: "Success" });
   return data.data;
 }
 
 
-export function getApprovalDetails(property_code: string) {
+export function getsubmitState(submitStatus: string) {
+  console.log(submitStatus, "submitStatus")
   return queryOptions({
-    queryKey: ["hitl-approve", property_code],
-    queryFn: approvalDetails,
+    queryKey: ["hitl-send-approve", submitStatus],
+    queryFn: submitState,
+    enabled: !!submitStatus,
   });
 }
