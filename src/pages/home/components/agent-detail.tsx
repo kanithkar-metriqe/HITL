@@ -46,7 +46,7 @@ export default function AgentDetails() {
         <div className="rounded-md bg-white xl:w-1/3 p-3">
             {/* To & CC */}
             {
-                reqType.value !== "JE" && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
+                reqType.value !== "JE"  && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
                     <div>
                         <Title intent="h5">To:</Title>
                         <span className='text-mt-normal'>

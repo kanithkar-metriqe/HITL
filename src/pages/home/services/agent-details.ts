@@ -1,5 +1,5 @@
 import { HITL_API } from "@/lib/api"
-import { reqType, responseId } from "@/store/store"
+import { responseId } from "@/store/store"
 import { queryOptions } from "@tanstack/react-query"
 
 export type EmailUser = {
@@ -17,7 +17,7 @@ export type AgentDetails = {
 
 async function agentDetails(): Promise<AgentDetails> {
   const payload = {
-    responseId: reqType.value === "JE" ?458 : responseId.value,
+    responseId: responseId.value,
   }
 
   const { data } = await HITL_API.post("/fetchhitlagentdata", payload)

@@ -33,7 +33,7 @@ export default function Home() {
           <span className="font-bold text-mt-primary">HITL Approval</span>
         </div>
       </header>
-      <div className="p-5 bg-neutral h-dvh">
+      <div className="p-5 bg-neutral h-full">
         <ApprovalDetails />
         <BankDetails />
         {

@@ -34,7 +34,7 @@ export const glItemsColumns: ColumnDef<GLItem>[] = [
   },
   {
     accessorKey: "account_code",
-    header: "DescriptAccount Codeion",
+    header: "Description",
     enableSorting: false,
   },
   {

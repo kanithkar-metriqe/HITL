@@ -8,7 +8,7 @@ export default function PMSTable() {
     const { data } = useQuery(getpmsTable(property_code.value));
     return (
         <DefaultTable
-            wrapperClassName="w-[96%] mx-auto border rounded-lg mt-3"
+            wrapperClassName="w-[96%] border rounded-lg mt-3"
             tableClassName="mx-auto rounded-lg w-full border border-collapse"
             data={data ?? []}
             columns={pmsDetailsColumns}
