@@ -45,7 +45,7 @@ export default function ApprovalDetails() {
                     </div>
                 </div>
                 <div className="px-5 ">
-                    <div className="text-normal-gray text-mt-normal font-semibold">Property ID</div>
+                    <div className="text-normal-gray text-[15px] font-semibold">Property Code</div>
                     <Title intent={"h5"} className="font-normal">{property_code.value}</Title>
                 </div>
             </div>

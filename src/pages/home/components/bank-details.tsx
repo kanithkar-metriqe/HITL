@@ -43,7 +43,7 @@ export default function BankDetails() {
                     </div>
                 </div>
                 <div>
-                    <div>Amount</div>
+                    <div className="px-5 font-semibold">Amount</div>
                     <Title intent={"h6"} className="font-semibold">{newdata?.amount}</Title>
                 </div>
             </div>
