@@ -3,7 +3,7 @@ import { property_code } from "@/store/store";
 import { useQuery } from "@tanstack/react-query";
 import { getBankDetails } from "../services/bank-details";
 
-// const data = {
+// const newdata = {
 //     "transaction_date": "2025-08-28",
 //     "category": "Amex",
 //     "description": "AMERICAN EXPRESS SETTLEMENT XXXXXX2463",
@@ -15,7 +15,7 @@ export default function BankDetails() {
     const { data: newdata } = useQuery(
         getBankDetails(property_code.value)
     );
-    console.log(newdata)
+    // console.log(newdata)
     return (
         <div className="pt-4">
             <Title intent="h6" className="font-semibold border-b pb-1 border-mt-border">Bank Details</Title>

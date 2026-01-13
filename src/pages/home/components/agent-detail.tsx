@@ -16,7 +16,7 @@ export default function AgentDetails() {
     const [submitStatus, setsubmitStatus] = useState("")
     const { data } = useQuery(getagentDetails(property_code.value))
     const { data: newdata } = useQuery(getsubmitState(submitStatus))
-    console.log(newdata)
+    // console.log(newdata)
     const response = data
 
     const toUsers = response?.toemailusers ?? []
@@ -34,19 +34,21 @@ export default function AgentDetails() {
     }
 
     function handleSubmit() {
-        console.log("JSSSSS")
         setsubmitStatus("JE")
     }
 
     const rejectValue = reqType.value === "JE" ? "Reject" : "Resubmit"
     const approveValue = reqType.value === "JE" ? "Approve" : "Send Mail"
+    const dataVal = reqType.value === "JE" ? "Analysis" : "Email Content";
+    // const dataVal = reqType.value;
+    console.log(reqType.value, "reqType.value");
 
 
     return (
         <div className="rounded-md bg-white xl:w-1/3 p-3">
             {/* To & CC */}
             {
-                reqType.value !== "JE"  && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
+                reqType.value !== "JE" && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
                     <div>
                         <Title intent="h5">To:</Title>
                         <span className='text-mt-normal'>
@@ -66,26 +68,38 @@ export default function AgentDetails() {
             {/* Email Content */}
             <div className="mt-3 pt-2 pb-3 rounded-md px-3 bg-mt-gray-680">
                 <Title intent="h5" className="pb-3">
-                    {reqType.value === "JE" ? "Analysis" : "Email Content"}
+                    {dataVal}
                 </Title>
-
                 <p className="text-sm leading-relaxed">
                     {emailMessage}
                 </p>
             </div>
+
+
             {
                 inputStatus && <div className='py-3 bg-white'>
-                    <Label htmlFor="resubmitReason" className='text-mt-normal pb-1 font-semibold block'>Enter Resubmit Reason</Label>
-                    <Input placeholder='Enter resubmit reason ' value={resubmit} onChange={(e) => setResubmit(e.target.value)} className='' />
+                    <Label htmlFor="resubmitReason" className='text-mt-normal pb-1 font-semibold block'>
+                        {
+                            reqType.value === "JE" ? "Enter Reject Reason" : "Enter Resubmit Reason"
+                        }
+                    </Label>
+                    <Input placeholder='Enter reason' value={resubmit} onChange={(e) => setResubmit(e.target.value)} className='' />
                 </div>
             }
             <div className="pt-4 flex w-full justify-end">
                 {
-                    inputStatus === false ? <Button className="cursor-pointer transition-all" variant="ghost" onClick={() => setINputStatus(true)}>{rejectValue}</Button> : <Button className="cursor-pointer transition-all" variant="ghost" onClick={handle}>{rejectValue}</Button>
+                    inputStatus && <Button variant="default" className="mr-3" onClick={() => setINputStatus(false)}>
+                        Back
+                    </Button>
                 }
-                <Button variant="default" className="ml-3" onClick={handleSubmit}>
-                    {approveValue}
-                </Button>
+                {
+                    inputStatus === false ? <Button className="cursor-pointer transition-all" variant="ghost" onClick={() => setINputStatus(true)}>{rejectValue}</Button> : <Button className="cursor-pointer transition-all" variant="ghost" onClick={handle}>{ reqType.value === "JE" ? "Reject" : "Resubmit"}</Button>
+                }
+                {
+                    !inputStatus && <Button variant="default" className="ml-3" onClick={handleSubmit}>
+                        {approveValue}
+                    </Button>
+                }
             </div>
         </div>
     )

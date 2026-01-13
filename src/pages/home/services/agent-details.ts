@@ -29,5 +29,6 @@ export function getagentDetails(property_code: string) {
   return queryOptions({
     queryKey: ["hitl-agent-details", property_code],
     queryFn: agentDetails,
+    // enabled:!!type,
   })
 }

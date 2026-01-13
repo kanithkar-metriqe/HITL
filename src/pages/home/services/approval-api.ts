@@ -1,5 +1,5 @@
 import { HITL_API } from "@/lib/api";
-import { responseId } from "@/store/store";
+import { reqType, responseId } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
 
 
@@ -24,7 +24,7 @@ async function approvalDetails(): Promise<HitlCase> {
     "/fetchhitldata",
     payload,)
 
-
+  reqType.value = data.data?.category === "JE Posting" ? "JE" : "Mail";
   return data.data;
 }
 

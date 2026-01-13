@@ -38,17 +38,7 @@ export const glItemsColumns: ColumnDef<GLItem>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "category",
-    header: "Category",
-    enableSorting: true,
-  },
-  {
-    accessorKey: "transaction_type",
-    header: "Transaction Type",
-    enableSorting: true,
-  },
-  {
-
+    
     accessorKey: "account_date",
     header: "Account Date",
     enableSorting: true,
@@ -57,6 +47,11 @@ export const glItemsColumns: ColumnDef<GLItem>[] = [
     accessorKey: "amount",
     header: "Amount",
     enableSorting: true,
+  },
+  {
+    accessorKey: "transaction_type",
+    header: "Transaction Type",
+    enableSorting: false,
   },
 ];
 

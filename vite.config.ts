@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [TanStackRouter(),
   react({
     babel: {
-      plugins: [['babel-plugin-react-compiler']],
+      plugins: [["module:@preact/signals-react-transform"]],
     },
   }), tailwindcss()
   ],

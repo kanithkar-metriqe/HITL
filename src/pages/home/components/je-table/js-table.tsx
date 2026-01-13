@@ -3,7 +3,7 @@ import { journalEntryColumns } from "./journal-entry.columns";
 import { DataTable } from "./table";
 import { useQuery } from "@tanstack/react-query";
 import { getJElDetails } from "../../services/je-details";
-import { property_code } from "@/store/store";
+import { property_code, reqType } from "@/store/store";
 
 // const data = [
 //   {
@@ -21,9 +21,9 @@ import { property_code } from "@/store/store";
 
 export default function JETable() {
   const { data: newdata } = useQuery(
-    getJElDetails(property_code.value)
+    getJElDetails(property_code.value, reqType.value)
   );
-  console.log(newdata)
+  // console.log(newdata)
   return (
     <div className="py-10">
       <Title intent="h6" className="font-semibold border-b pb-1 border-mt-border">Journal Entry</Title>

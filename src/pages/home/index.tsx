@@ -6,20 +6,21 @@ import JETable from "./components/je-table/js-table";
 import metLogo from "../../../public/met-logo.png";
 import { useSearch } from "@tanstack/react-router";
 import { property_code, reqType, responseId } from "@/store/store";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
 
   const query = useSearch({ strict: false }) as {
     responseId?: string;
     property_code?: string;
-    type?: string;
+    // type?: string;
   };
 
 
 
   responseId.value = query.responseId ?? "";
   property_code.value = query.property_code ?? "";
-  reqType.value = query.type ?? "";
+  // reqType.value = query.type ?? "";
 
 
   return (
@@ -33,7 +34,7 @@ export default function Home() {
           <span className="font-bold text-mt-primary">HITL Approval</span>
         </div>
       </header>
-      <div className="p-5 bg-neutral h-full">
+      <div className={cn("p-5 bg-neutral",  reqType.value === "JE"  ? "h-full" : "h-dvh")}>
         <ApprovalDetails />
         <BankDetails />
         {

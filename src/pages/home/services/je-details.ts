@@ -24,9 +24,11 @@ async function jelDetails(): Promise<HitlCase[]> {
 }
 
 
-export function getJElDetails(property_code: string) {
+export function getJElDetails(property_code: string, reqType:string) {
+ 
   return queryOptions({
     queryKey: ["hitl-je-details", property_code],
     queryFn: jelDetails,
+    enabled:!!reqType,
   });
 }

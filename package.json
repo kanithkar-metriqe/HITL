@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@preact/signals-react-transform": "^0.6.0",
     "@tanstack/router-plugin": "^1.145.2",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
