@@ -16,6 +16,7 @@ export default function AgentDetails() {
     const [submitStatus, setsubmitStatus] = useState("")
     const { data } = useQuery(getagentDetails(property_code.value))
     const { data: newdata } = useQuery(getsubmitState(submitStatus))
+    console.log(newdata)
     // console.log(newdata)
     const response = data
 
