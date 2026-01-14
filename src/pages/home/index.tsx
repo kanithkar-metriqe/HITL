@@ -5,23 +5,29 @@ import BankDetails from "./components/bank-details";
 import JETable from "./components/je-table/js-table";
 import metLogo from "../../../public/met-logo.png";
 import { useSearch } from "@tanstack/react-router";
-import { property_code, reqType, responseId } from "@/store/store";
+import {
+  property_code,
+  reqType,
+  responseId,
+  trackingIdSignal,
+} from "@/store/store";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 export default function Home() {
-
   const query = useSearch({ strict: false }) as {
     responseId?: string;
     property_code?: string;
+    trackingId?: string;
     // type?: string;
   };
 
-
-
-  responseId.value = query.responseId ?? "";
-  property_code.value = query.property_code ?? "";
-  // reqType.value = query.type ?? "";
-
+  useEffect(() => {
+    responseId.value = query.responseId ?? "";
+    property_code.value = query.property_code ?? "";
+    trackingIdSignal.value = query.trackingId ?? "";
+    // reqType.value = query.type ?? "";
+  }, [query.responseId, query.property_code, query.trackingId]);
 
   return (
     <>
@@ -34,12 +40,15 @@ export default function Home() {
           <span className="font-bold text-mt-primary">HITL Approval</span>
         </div>
       </header>
-      <div className={cn("p-5 bg-neutral",  reqType.value === "JE"  ? "h-full" : "h-dvh")}>
+      <div
+        className={cn(
+          "p-5 bg-neutral",
+          reqType.value === "JE" ? "h-full" : "h-dvh"
+        )}
+      >
         <ApprovalDetails />
         <BankDetails />
-        {
-          reqType.value === "JE" && <JETable />
-        }
+        {reqType.value === "JE" && <JETable />}
         <Analysis />
       </div>
     </>
