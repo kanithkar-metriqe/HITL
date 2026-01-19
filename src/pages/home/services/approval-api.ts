@@ -33,5 +33,6 @@ export function getApprovalDetails(property_code: string) {
   return queryOptions({
     queryKey: ["hitl-approve", property_code],
     queryFn: approvalDetails,
+    enabled:!!property_code,
   });
 }

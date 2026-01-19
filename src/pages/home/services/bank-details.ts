@@ -33,5 +33,6 @@ export function getBankDetails(property_code: string) {
   return queryOptions({
     queryKey: ["bank-details", property_code],
     queryFn: bankDetails,
+    enabled:!!property_code,
   });
 }
