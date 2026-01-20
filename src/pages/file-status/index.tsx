@@ -1,14 +1,20 @@
 import React, { useState, type ReactNode, useCallback } from "react";
-import {
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getFileStatusGrid, getPropertyOptions } from "./services";
-import type { FileUpload, ReportFile, DropdownOption, FilterSectionState, PeriodType, DashboardState } from "./types";
+import type {
+  FileUpload,
+  ReportFile,
+  DropdownOption,
+  FilterSectionState,
+  PeriodType,
+  DashboardState,
+} from "./types";
 import CalendarPopup from "@/components/ui/calender";
 import CustomDropdown from "@/components/ui/dropdown";
 import ReportsTable from "./components/reports-table";
 import FileUploadTable from "./components/file-upload";
+import metLogo from "../../../public/met-logo.png";
 
 // ========== DUMMY DATA ==========
 const dummyFileUploadData: FileUpload[] = [
@@ -317,12 +323,14 @@ const Dashboard: React.FC = (): ReactNode => {
   console.warn("🚀 ~ Dashboard ~ data:", fileStatusGrid);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 flex flex-col">
-      <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col">
-        {/* Header */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          BR & Reports Dashboard
-        </h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <header className="flex justify-between sticky top-0 z-100 bg-white shadow">
+        <div>
+          <img src={metLogo} alt="Logo" className="h-12 p-5 py-1" />
+        </div>
+      </header>
+      <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col p-8">
+      
 
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col flex-1 overflow-hidden">
