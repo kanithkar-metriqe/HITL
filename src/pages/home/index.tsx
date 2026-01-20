@@ -9,10 +9,13 @@ import {
   property_code,
   reqType,
   responseId,
+  taskStatus,
   trackingIdSignal,
 } from "@/store/store";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import Title from "@/components/ui/title";
+import TickMarkCircle from "@/components/ui/icons/tick-mark-circle";
 
 export default function Home() {
   const query = useSearch({ strict: false }) as {
@@ -40,17 +43,26 @@ export default function Home() {
           <span className="font-bold text-mt-primary">HITL Approval</span>
         </div>
       </header>
-      <div
-        className={cn(
-          "p-5 bg-neutral",
-          reqType.value === "JE" ? "h-full" : "h-dvh"
-        )}
-      >
-        <ApprovalDetails />
-        <BankDetails />
-        {reqType.value === "JE" && <JETable />}
-        <Analysis />
-      </div>
+      {
+        taskStatus.value ? <div className="h-[98dvh] flex items-center justify-center">
+          <Title className="text-center font-semibold text-[30px] pb-15" intent="h6">
+            <TickMarkCircle className="w-12 h-12 mr-3 text-green-700 bg-transparent inline-block" />
+            Request already processed, Please contact your administartor
+          </Title>
+        </div> : <div
+          className={cn(
+            "p-5 bg-neutral",
+            reqType.value === "JE" ? "h-full" : "h-dvh"
+          )}
+        >
+          <ApprovalDetails />
+          <BankDetails />
+          {reqType.value === "JE" && <JETable />}
+          <Analysis />
+        </div>
+      }
+
+
     </>
   );
 }
