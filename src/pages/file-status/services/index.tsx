@@ -1,18 +1,28 @@
 import { HITL_API } from "@/lib/api";
 import { queryOptions } from "@tanstack/react-query";
 import type { XiorError } from "xior";
+import type { FileUpload, propertyOptions } from "../types";
 
 export function getPropertyOptions() {
-  return queryOptions<{
-    label: string;
-    value: string;
-  }[]>({
+  return queryOptions<
+    {
+      label: string;
+      value: string;
+    }[]
+  >({
     queryKey: ["property-options"],
     queryFn: async () => {
       try {
-        return await getTemplateOptionsAPI();
-      }
-      catch (err: unknown) {
+        const response = await getTemplateOptionsAPI();
+        if (response?.length > 0) {
+          return (
+            response?.map((t: propertyOptions) => ({
+              label: t.propertyName,
+              value: t.propertyId,
+            })) ?? []
+          );
+        }
+      } catch (err: unknown) {
         const error = err as XiorError;
         if (error?.response?.status === 404) {
           // Normalize 404 -> empty array
@@ -26,27 +36,22 @@ export function getPropertyOptions() {
 }
 
 export async function getTemplateOptionsAPI() {
-  const { data, status } = await HITL_API.post("fetchpropertydetails",{});
+  const { data } = await HITL_API.get("test/fetchpropertyDetails");
 
-  if (status === 200) {
-    return data.data
-  }
-  else {
+  if (data?.sucess) {
+    return data.data;
+  } else {
     return [];
   }
 }
 
 export function getFileStatusGrid() {
-  return queryOptions<{
-    label: string;
-    value: string;
-  }[]>({
+  return queryOptions<FileUpload[]>({
     queryKey: ["file-status-grid"],
     queryFn: async () => {
       try {
-        return await getTemplateOptionsAPI();
-      }
-      catch (err: unknown) {
+        return await getFileStatusGridAPI();
+      } catch (err: unknown) {
         const error = err as XiorError;
         if (error?.response?.status === 404) {
           // Normalize 404 -> empty array
@@ -60,12 +65,11 @@ export function getFileStatusGrid() {
 }
 
 export async function getFileStatusGridAPI() {
-  const { data, status } = await HITL_API.post("fetchattachmentdetails",{});
+  const { data } = await HITL_API.get("test/fetchAttachmentDetails");
 
-  if (status === 200) {
-    return data.data
-  }
-  else {
+  if (data?.sucess) {
+    return data.data;
+  } else {
     return [];
   }
 }

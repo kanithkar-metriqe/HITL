@@ -3,7 +3,6 @@ import { ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getFileStatusGrid, getPropertyOptions } from "./services";
 import type {
-  FileUpload,
   ReportFile,
   DropdownOption,
   FilterSectionState,
@@ -15,66 +14,6 @@ import CustomDropdown from "@/components/ui/dropdown";
 import ReportsTable from "./components/reports-table";
 import FileUploadTable from "./components/file-upload";
 import metLogo from "../../../public/met-logo.png";
-
-// ========== DUMMY DATA ==========
-const dummyFileUploadData: FileUpload[] = [
-  {
-    id: "1",
-    fileName: "BR_Report_2024_Q1.xlsx",
-    status: "Completed",
-    uploadDate: "2024-01-15",
-    size: "2.4 MB",
-  },
-  {
-    id: "2",
-    fileName: "BR_Report_2024_Q2.xlsx",
-    status: "In Progress",
-    uploadDate: "2024-04-10",
-    size: "3.1 MB",
-  },
-  {
-    id: "3",
-    fileName: "BR_Report_2024_Q3.xlsx",
-    status: "Failed",
-    uploadDate: "2024-07-05",
-    size: "2.8 MB",
-  },
-  {
-    id: "4",
-    fileName: "BR_Report_2024_Q4.xlsx",
-    status: "Pending",
-    uploadDate: "2024-10-20",
-    size: "2.9 MB",
-  },
-  {
-    id: "5",
-    fileName: "BR_Report_2023_Annual.xlsx",
-    status: "Completed",
-    uploadDate: "2024-01-10",
-    size: "5.2 MB",
-  },
-  {
-    id: "6",
-    fileName: "BR_Report_2024_Jan.xlsx",
-    status: "Completed",
-    uploadDate: "2024-02-01",
-    size: "1.9 MB",
-  },
-  {
-    id: "7",
-    fileName: "BR_Report_2024_Feb.xlsx",
-    status: "In Progress",
-    uploadDate: "2024-03-05",
-    size: "2.1 MB",
-  },
-  {
-    id: "8",
-    fileName: "BR_Report_2024_Mar.xlsx",
-    status: "Completed",
-    uploadDate: "2024-04-02",
-    size: "2.3 MB",
-  },
-];
 
 const dummyReportData: ReportFile[] = [
   {
@@ -121,17 +60,13 @@ const FilterSection: React.FC = (): ReactNode => {
 
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-  const nameOptions: DropdownOption[] = [
-    { label: "Property 1", value: "prop1" },
-    { label: "Property 2", value: "prop2" },
-    { label: "Property 3", value: "prop3" },
-    { label: "Property 4", value: "prop4" },
-  ];
+  /* ------------------------------ API Function ------------------------------ */
+  const { data: propertyOptions } =
+    useQuery(getPropertyOptions());
 
   const periodOptions: DropdownOption[] = [
-    { label: "Daily", value: "daily" },
+    { label: "Day wise", value: "daily" },
     { label: "Monthly", value: "monthly" },
-    { label: "Yearly", value: "yearly" },
   ];
 
   const monthOptions: DropdownOption[] = [
@@ -150,10 +85,10 @@ const FilterSection: React.FC = (): ReactNode => {
   ];
 
   const yearOptions: DropdownOption[] = [
+    { label: "2026", value: "2026" },
+    { label: "2025", value: "2025" },
     { label: "2024", value: "2024" },
     { label: "2023", value: "2023" },
-    { label: "2022", value: "2022" },
-    { label: "2021", value: "2021" },
   ];
 
   const handleNameChange = useCallback((value: string): void => {
@@ -205,11 +140,11 @@ const FilterSection: React.FC = (): ReactNode => {
     <div className="space-y-6">
       {/* Name Selection */}
       <CustomDropdown
-        label="Name"
+        label="Property Name"
         value={state.selectedName}
         onChange={handleNameChange}
-        options={nameOptions}
-        placeholder="Select Property"
+        options={propertyOptions as DropdownOption[]}
+        placeholder="Select Property Name"
       />
 
       {/* Period Selection */}
@@ -312,15 +247,8 @@ const Dashboard: React.FC = (): ReactNode => {
   }, []);
 
   /* ------------------------------ API Function ------------------------------ */
-  const { data: propertyOptions, isFetching: isPropertyFetching } =
-    useQuery(getPropertyOptions());
-  console.log("🚀 ~ Dashboard ~ isFetching:", isPropertyFetching);
-  console.warn("🚀 ~ Dashboard ~ data:", propertyOptions);
-
   const { data: fileStatusGrid, isFetching: isFileStatusGridFetching } =
     useQuery(getFileStatusGrid());
-  console.log("🚀 ~ Dashboard ~ isFetching:", isFileStatusGridFetching);
-  console.warn("🚀 ~ Dashboard ~ data:", fileStatusGrid);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -330,8 +258,6 @@ const Dashboard: React.FC = (): ReactNode => {
         </div>
       </header>
       <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col p-8">
-      
-
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col flex-1 overflow-hidden">
           <div className="flex gap-8 px-6 border-b border-gray-200">
@@ -363,7 +289,7 @@ const Dashboard: React.FC = (): ReactNode => {
               <div className="grid grid-cols-3 gap-8 h-full">
                 {/* Left: Table */}
                 <div className="col-span-2 flex flex-col overflow-hidden">
-                  <FileUploadTable data={dummyFileUploadData} />
+                  <FileUploadTable data={fileStatusGrid || []} isfetching={isFileStatusGridFetching}/>
                 </div>
 
                 {/* Right: Filters */}

@@ -13,19 +13,31 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
   const columnHelper = createColumnHelper<FileUpload>();
 
   const columns: ColumnDef<FileUpload, any>[] = [
-    columnHelper.accessor("fileName", {
+    columnHelper.accessor("propertyName", {
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="flex items-center gap-2 hover:text-blue-600"
         >
-          File Name
+          Property Name
           <ArrowUpDown size={14} className="opacity-50" />
         </button>
       ),
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("status", {
+    columnHelper.accessor("documentType", {
+      header: ({ column }) => (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center gap-2 hover:text-blue-600"
+        >
+          Document Type
+          <ArrowUpDown size={14} className="opacity-50" />
+        </button>
+      ),
+      cell: (info) => info.getValue(),
+    }),
+     columnHelper.accessor("status", {
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -36,30 +48,6 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
         </button>
       ),
       cell: (info) => <StatusBadge status={info.getValue()} />,
-    }),
-    columnHelper.accessor("uploadDate", {
-      header: ({ column }) => (
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-blue-600"
-        >
-          Upload Date
-          <ArrowUpDown size={14} className="opacity-50" />
-        </button>
-      ),
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("size", {
-      header: ({ column }) => (
-        <button
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-blue-600"
-        >
-          Size
-          <ArrowUpDown size={14} className="opacity-50" />
-        </button>
-      ),
-      cell: (info) => info.getValue(),
     }),
   ];
 

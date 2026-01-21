@@ -1,10 +1,11 @@
 // ========== TYPE DEFINITIONS ==========
 interface FileUpload {
-    id: string;
-    fileName: string;
-    status: "Completed" | "In Progress" | "Failed" | "Pending";
-    uploadDate: string;
-    size: string;
+    attachmentId: string;
+    propertyName: string;
+    status: "Processing" | "Failed";
+    propertyCode: string;
+    tempLoc: string;
+    documentType: string;
 }
 
 interface ReportFile {
@@ -25,6 +26,8 @@ interface CustomDropdownProps {
     onChange: (value: string) => void;
     options: DropdownOption[];
     placeholder: string;
+    labelkey?: string;
+    valueKey?: string;
 }
 
 interface StatusBadgeProps {
@@ -54,11 +57,17 @@ interface DashboardState {
 }
 
 interface FileUploadTableProps {
-  data: FileUpload[];
+    data: FileUpload[];
+    isfetching:boolean
 }
 
 type PeriodType = "daily" | "monthly" | "yearly";
 
+interface propertyOptions {
+    propertyId : string;
+    propertyName : string;
+}
+
 export type {
-    FileUpload, FileUploadTableProps, DashboardState, ReportsTableProps, CalendarPopupProps, ReportFile, DropdownOption, CustomDropdownProps, StatusBadgeProps, FilterSectionState, PeriodType
+    FileUpload,propertyOptions, FileUploadTableProps, DashboardState, ReportsTableProps, CalendarPopupProps, ReportFile, DropdownOption, CustomDropdownProps, StatusBadgeProps, FilterSectionState, PeriodType
 }
