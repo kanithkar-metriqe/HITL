@@ -1,7 +1,17 @@
 // ========== FILE UPLOAD TABLE COMPONENT (TanStack Table) ==========
 
 import StatusBadge from "@/components/ui/badge";
-import { type SortingState, createColumnHelper, type ColumnDef, useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from "@tanstack/react-table";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  type SortingState,
+  createColumnHelper,
+  type ColumnDef,
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  flexRender,
+} from "@tanstack/react-table";
 import { ArrowUpDown, RefreshCw } from "lucide-react";
 import { type ReactNode, useState, useCallback } from "react";
 import type { FileUploadTableProps, FileUpload } from "../types";
@@ -10,6 +20,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
   data,
 }): ReactNode => {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const queryClient = useQueryClient();
   const columnHelper = createColumnHelper<FileUpload>();
 
   const columns: ColumnDef<FileUpload, any>[] = [
@@ -17,7 +28,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-blue-600"
+          className="flex items-center gap-2 hover:text-blue-600 cursor-pointer"
         >
           Property Name
           <ArrowUpDown size={14} className="opacity-50" />
@@ -29,7 +40,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-blue-600"
+          className="flex items-center gap-2 hover:text-blue-600 cursor-pointer"
         >
           Document Type
           <ArrowUpDown size={14} className="opacity-50" />
@@ -37,11 +48,11 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
       ),
       cell: (info) => info.getValue(),
     }),
-     columnHelper.accessor("status", {
+    columnHelper.accessor("status", {
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-blue-600"
+          className="flex items-center gap-2 hover:text-blue-600 cursor-pointer"
         >
           Status
           <ArrowUpDown size={14} className="opacity-50" />
@@ -77,20 +88,22 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
   const startRow: number = pageIndex * pageSize + 1;
   const endRow: number = Math.min((pageIndex + 1) * pageSize, totalRows);
 
-  const handleRefresh = useCallback((): void => {
-    console.log("Refreshing table...");
-  }, []);
+  const handleRefresh = useCallback(async (): Promise<void> => {
+    await queryClient.invalidateQueries({
+      queryKey: ["file-status-grid"],
+    });
+  }, [queryClient]);
 
   return (
     <div className="space-y-4 flex flex-col h-full">
       {/* Header with Title and Refresh Button */}
-      <div className="flex justify-between items-center flex-shrink-0">
+      <div className="flex justify-between items-center shrink-0">
         <h3 className="text-lg font-semibold text-gray-900">
           File Uploading Status
         </h3>
         <button
           onClick={handleRefresh}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
           title="Refresh"
         >
           <RefreshCw size={20} className="text-gray-600" />
@@ -107,7 +120,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                      className="px-6  py-3 text-left text-sm font-semibold text-gray-900"
                     >
                       {flexRender(
                         header.column.columnDef.header,
@@ -176,7 +189,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            className="px-3 py-2 cursor-pointer border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
           >
             Next
           </button>
@@ -184,7 +197,7 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
           <button
             onClick={() => table.setPageIndex(totalPages - 1)}
             disabled={!table.getCanNextPage()}
-            className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            className="px-3 py-2 border cursor-pointer border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
           >
             Last
           </button>

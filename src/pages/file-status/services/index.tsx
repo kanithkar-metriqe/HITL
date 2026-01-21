@@ -1,7 +1,8 @@
-import { HITL_API } from "@/lib/api";
+
 import { queryOptions } from "@tanstack/react-query";
 import type { XiorError } from "xior";
 import type { FileUpload, propertyOptions } from "../types";
+import { HITL_FILE_STATUS_API_URL } from "@/lib/api";
 
 export function getPropertyOptions() {
   return queryOptions<
@@ -36,7 +37,7 @@ export function getPropertyOptions() {
 }
 
 export async function getTemplateOptionsAPI() {
-  const { data } = await HITL_API.get("test/fetchpropertyDetails");
+  const { data } = await HITL_FILE_STATUS_API_URL.get("test/fetchpropertyDetails");
 
   if (data?.sucess) {
     return data.data;
@@ -65,7 +66,7 @@ export function getFileStatusGrid() {
 }
 
 export async function getFileStatusGridAPI() {
-  const { data } = await HITL_API.get("test/fetchAttachmentDetails");
+  const { data } = await HITL_FILE_STATUS_API_URL.get("test/fetchAttachmentDetails");
 
   if (data?.sucess) {
     return data.data;

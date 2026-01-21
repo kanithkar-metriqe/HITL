@@ -125,13 +125,6 @@ const FilterSection: React.FC = (): ReactNode => {
 
   const handleSubmit = useCallback((): void => {
     if (isAllSelected) {
-      console.log({
-        name: state.selectedName,
-        period: state.selectedPeriod,
-        month: state.selectedMonth,
-        year: state.selectedYear,
-        date: state.selectedDate,
-      });
       alert("Filters submitted successfully!");
     }
   }, [isAllSelected, state]);
@@ -263,7 +256,7 @@ const Dashboard: React.FC = (): ReactNode => {
           <div className="flex gap-8 px-6 border-b border-gray-200">
             <button
               onClick={() => handleTabChange("br")}
-              className={`py-4 px-2 font-medium border-b-2 transition-colors ${
+              className={`py-4 px-2 font-medium border-b-2 transition-colors cursor-pointer ${
                 state.activeTab === "br"
                   ? "border-blue-600 text-blue-600"
                   : "border-transparent text-gray-600 hover:text-gray-900"
@@ -273,7 +266,7 @@ const Dashboard: React.FC = (): ReactNode => {
             </button>
             <button
               onClick={() => handleTabChange("reports")}
-              className={`py-4 px-2 font-medium border-b-2 transition-colors ${
+              className={`py-4 px-2 font-medium border-b-2 transition-colors cursor-pointer ${
                 state.activeTab === "reports"
                   ? "border-blue-600 text-blue-600"
                   : "border-transparent text-gray-600 hover:text-gray-900"
