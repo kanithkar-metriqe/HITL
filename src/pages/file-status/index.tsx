@@ -257,7 +257,7 @@ const Dashboard: React.FC = (): ReactNode => {
           <img src={metLogo} alt="Logo" className="h-12 p-5 py-1" />
         </div>
       </header>
-      <div className="max-w-7xl mx-auto w-full flex-1 flex flex-col p-8">
+      <div className="max-w-8xl mx-auto w-full flex-1 flex flex-col p-8">
         {/* Tabs */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col flex-1 overflow-hidden">
           <div className="flex gap-8 px-6 border-b border-gray-200">
