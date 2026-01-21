@@ -40,13 +40,20 @@ export function AccordionWrapper({
   items,
   type = "single",
   defaultValue,
-  collapsible = true,
+  collapsible = false,
   className,
 }: AccordionWrapperProps) {
+  // 👉 Auto-open first item if defaultValue not provided
+  const computedDefaultValue =
+    defaultValue ??
+    (items.length > 0
+      ? normalizeValue(items[0].value, 0)
+      : undefined);
+
   return (
     <Accordion
       type={type}
-      defaultValue={defaultValue as any}
+      defaultValue={computedDefaultValue as any}
       collapsible={collapsible}
       className={className}
     >
@@ -59,8 +66,12 @@ export function AccordionWrapper({
             value={normalizedValue}
             disabled={item.disabled}
           >
-            <AccordionTrigger className={item.borderClass}>{item.title}</AccordionTrigger>
-            <AccordionContent className={item.borderclassChild}>{item.content}</AccordionContent>
+            <AccordionTrigger className={item.borderClass}>
+              {item.title}
+            </AccordionTrigger>
+            <AccordionContent className={item.borderclassChild}>
+              {item.content}
+            </AccordionContent>
           </AccordionItem>
         );
       })}
