@@ -9,8 +9,8 @@ export default function GlTable() {
     console.log(data)
     return (
         <DefaultTable
-            wrapperClassName="w-[95%] border rounded-lg mt-3 max-h-[300px]  overflow-y-scroll"
-            tableClassName="mx-auto rounded-lg w-full border border-collapse"
+            wrapperClassName="w-[96%] mx-auto border rounded-lg mt-3 max-h-[300px]"
+            tableClassName=" rounded-lg w-full border border-collapse"
             data={data ?? []}
             columns={glItemsColumns}
         />
