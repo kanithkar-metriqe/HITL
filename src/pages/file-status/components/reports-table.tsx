@@ -3,11 +3,19 @@
 import { type SortingState, createColumnHelper, type ColumnDef, useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from "@tanstack/react-table";
 import { ArrowUpDown, Download } from "lucide-react";
 import { type ReactNode, useState, useCallback } from "react";
-import type { ReportsTableProps, ReportFile } from "../types";
+import type { ReportFile } from "../types";
+import { useQuery } from "@tanstack/react-query";
+import { getReportsGrid } from "../services";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
 
-const ReportsTable: React.FC<ReportsTableProps> = ({ data }): ReactNode => {
+const ReportsTable: React.FC = (): ReactNode => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const columnHelper = createColumnHelper<ReportFile>();
+
+   /* ------------------------------ API Function ------------------------------ */
+  const { data: reportsGrid, isFetching } =
+    useQuery(getReportsGrid());
+
 
   const handleDownloadPDF = useCallback((fileUrl: string): void => {
     window.open(fileUrl, "_blank");
@@ -26,7 +34,7 @@ const ReportsTable: React.FC<ReportsTableProps> = ({ data }): ReactNode => {
       ),
       cell: (info) => (
         <button
-          onClick={() => handleDownloadPDF(info.row.original.fileUrl)}
+          onClick={() => handleDownloadPDF(info.row.original.downloadUrl)}
           className="text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-2"
         >
           <Download size={16} />
@@ -49,7 +57,7 @@ const ReportsTable: React.FC<ReportsTableProps> = ({ data }): ReactNode => {
   ];
 
   const table = useReactTable({
-    data,
+    data: reportsGrid || [],
     columns,
     state: {
       sorting,
@@ -73,6 +81,11 @@ const ReportsTable: React.FC<ReportsTableProps> = ({ data }): ReactNode => {
 
   const startRow: number = pageIndex * pageSize + 1;
   const endRow: number = Math.min((pageIndex + 1) * pageSize, totalRows);
+
+   // Show skeleton while loading
+  if (isFetching) {
+    return <TableSkeleton columns={2} rows={3} />;
+  }
 
   return (
     <div className="space-y-4 flex flex-col h-full">
@@ -129,7 +142,7 @@ const ReportsTable: React.FC<ReportsTableProps> = ({ data }): ReactNode => {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between pt-4 flex-shrink-0">
+      <div className="flex items-center justify-between pt-4 shrink-0">
         <div className="text-sm text-gray-600">
           Showing {startRow} - {endRow} of {totalRows}
         </div>

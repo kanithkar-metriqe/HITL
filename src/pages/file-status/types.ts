@@ -6,13 +6,14 @@ interface FileUpload {
     propertyCode: string;
     tempLoc: string;
     documentType: string;
+    fileDate: string;
 }
 
 interface ReportFile {
     id: string;
     fileName: string;
     uploadDate: string;
-    fileUrl: string;
+    downloadUrl: string;
 }
 
 interface DropdownOption {
@@ -35,11 +36,12 @@ interface StatusBadgeProps {
 }
 
 interface FilterSectionState {
-    selectedName: string;
-    selectedPeriod: "daily" | "monthly" | "yearly" | "";
+    selectedPropertyName: string;
+    selectedPeriod: "Date" | "Monthly" | "";
     selectedMonth: string;
     selectedYear: string;
     selectedDate: string;
+    selectedPropertyCode: string
 }
 
 interface CalendarPopupProps {
@@ -48,26 +50,27 @@ interface CalendarPopupProps {
     onClose: () => void;
 }
 
-interface ReportsTableProps {
-    data: ReportFile[];
-}
-
 interface DashboardState {
     activeTab: "br" | "reports";
 }
 
 interface FileUploadTableProps {
     data: FileUpload[];
-    isfetching:boolean
+    isfetching: boolean
 }
 
-type PeriodType = "daily" | "monthly" | "yearly";
+type PeriodType = "Date" | "Monthly";
 
 interface propertyOptions {
-    propertyId : string;
-    propertyName : string;
+    propertyId: string;
+    propertyName: string;
+    propertyCode: string;
 }
 
+type MutationError = {
+    message?: string;
+};
+
 export type {
-    FileUpload,propertyOptions, FileUploadTableProps, DashboardState, ReportsTableProps, CalendarPopupProps, ReportFile, DropdownOption, CustomDropdownProps, StatusBadgeProps, FilterSectionState, PeriodType
+    FileUpload, MutationError, propertyOptions, FileUploadTableProps, DashboardState, CalendarPopupProps, ReportFile, DropdownOption, CustomDropdownProps, StatusBadgeProps, FilterSectionState, PeriodType
 }

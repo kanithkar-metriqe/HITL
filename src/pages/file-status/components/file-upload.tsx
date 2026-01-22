@@ -15,9 +15,11 @@ import {
 import { ArrowUpDown, RefreshCw } from "lucide-react";
 import { type ReactNode, useState, useCallback } from "react";
 import type { FileUploadTableProps, FileUpload } from "../types";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
 
 const FileUploadTable: React.FC<FileUploadTableProps> = ({
   data,
+  isfetching
 }): ReactNode => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const queryClient = useQueryClient();
@@ -60,6 +62,18 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
       ),
       cell: (info) => <StatusBadge status={info.getValue()} />,
     }),
+    columnHelper.accessor("fileDate", {
+      header: ({ column }) => (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center gap-2 hover:text-blue-600 cursor-pointer"
+        >
+          File Date
+          <ArrowUpDown size={14} className="opacity-50" />
+        </button>
+      ),
+      cell: (info) => <StatusBadge status={info.getValue()} />,
+    }),
   ];
 
   const table = useReactTable({
@@ -93,6 +107,11 @@ const FileUploadTable: React.FC<FileUploadTableProps> = ({
       queryKey: ["file-status-grid"],
     });
   }, [queryClient]);
+
+    // Show skeleton while loading
+    if (isfetching) {
+      return <TableSkeleton columns={4} rows={3} />;
+    }
 
   return (
     <div className="space-y-4 flex flex-col h-full">

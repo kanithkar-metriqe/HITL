@@ -2,8 +2,8 @@ import type { CalendarPopupProps } from "@/pages/file-status/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
-// ========== CALENDAR POPUP COMPONENT =========
- const CalendarPopup: React.FC<CalendarPopupProps> = ({
+// ========== CALENDAR POPUP COMPONENT ==========
+const CalendarPopup: React.FC<CalendarPopupProps> = ({
   value,
   onChange,
   onClose,
@@ -74,66 +74,100 @@ import { useState, type ReactNode } from "react";
   };
 
   return (
-    <div
-      className="absolute z-50 mt-2 bg-white rounded-lg shadow-xl p-4 border border-gray-200"
-      style={{ minWidth: "300px" }}
-    >
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-sm font-semibold text-gray-900">
-          {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-        </h3>
-      </div>
+    <>
+      {/* Overlay - Click to close */}
+      <div
+        className="fixed inset-0 z-40"
+        onClick={onClose}
+      />
 
-      {/* Navigation */}
-      <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={handlePrevMonth}
-          className="p-1 hover:bg-gray-100 rounded-lg"
-        >
-          <ChevronLeft size={18} />
-        </button>
-        <button
-          onClick={handleNextMonth}
-          className="p-1 hover:bg-gray-100 rounded-lg"
-        >
-          <ChevronRight size={18} />
-        </button>
-      </div>
+      {/* Calendar Popup */}
+      <div className="fixed z-50 bg-white rounded-lg shadow-xl p-4 border border-gray-200 top-100 left-300 transform -translate-x-1/2 -translate-y-1/2" style={{ minWidth: "300px" }}>
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-sm font-semibold text-gray-900">
+            {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+          </h3>
+        </div>
 
-      {/* Weekday Headers */}
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-          <div
-            key={day}
-            className="text-center text-xs font-semibold text-gray-600"
-          >
-            {day}
-          </div>
-        ))}
-      </div>
-
-      {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-1">
-        {days.map((day, idx) => (
+        {/* Navigation */}
+        <div className="flex justify-between items-center mb-4">
           <button
-            key={idx}
-            onClick={() => day && handleDayClick(day)}
-            disabled={!day}
-            className={`p-2 text-xs rounded transition-colors ${
-              !day
-                ? "text-gray-200 cursor-default"
-                : isSelected(day)
-                  ? "bg-blue-600 text-white font-bold"
-                  : "bg-gray-50 hover:bg-blue-100 text-gray-900"
-            }`}
+            onClick={handlePrevMonth}
+            className="p-1 hover:bg-gray-100 rounded-lg"
           >
-            {day}
+            <ChevronLeft size={18} />
           </button>
-        ))}
+          <button
+            onClick={handleNextMonth}
+            className="p-1 hover:bg-gray-100 rounded-lg"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        {/* Weekday Headers */}
+        <div className="grid grid-cols-7 gap-1 mb-2">
+          {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
+            <div
+              key={day}
+              className="text-center text-xs font-semibold text-gray-600"
+            >
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar Grid */}
+        <div className="grid grid-cols-7 gap-1">
+          {days.map((day, idx) => (
+            <button
+              key={idx}
+              onClick={() => day && handleDayClick(day)}
+              disabled={!day}
+              className={`p-2 text-xs rounded transition-colors ${
+                !day
+                  ? "text-gray-200 cursor-default"
+                  : isSelected(day)
+                    ? "bg-blue-600 text-white font-bold"
+                    : "bg-gray-50 hover:bg-blue-100 text-gray-900"
+              }`}
+            >
+              {day}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default CalendarPopup;
+
+// ========== USAGE IN FILTER COMPONENT ==========
+// Simply use it as before (no ref passing needed):
+//
+// {state.selectedPeriod === "daily" && (
+//   <div>
+//     <label className="block text-sm font-medium text-gray-700 mb-2">
+//       Select Date
+//     </label>
+//     <button
+//       onClick={() => setShowCalendar(!showCalendar)}
+//       className="w-full px-4 py-2 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-between items-center"
+//     >
+//       <span className={state.selectedDate ? "text-gray-900" : "text-gray-500"}>
+//         {state.selectedDate ? new Date(state.selectedDate + "T00:00:00").toLocaleDateString() : "Pick a date"}
+//       </span>
+//       <ChevronDown size={16} />
+//     </button>
+//
+//     {showCalendar && (
+//       <CalendarPopup
+//         value={state.selectedDate}
+//         onChange={(date) => setState((prev) => ({ ...prev, selectedDate: date }))}
+//         onClose={() => setShowCalendar(false)}
+//       />
+//     )}
+//   </div>
+// )}
