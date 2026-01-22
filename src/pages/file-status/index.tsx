@@ -59,10 +59,11 @@ const FilterSection: React.FC = (): ReactNode => {
     { label: "2023", value: "2023" },
   ];
 
-  const handleNameChange = useCallback((value: string): void => {
+  const handleNameChange = (value: string): void => {
+    
     const propertyCode = propertyOptions?.find((x)=>x.value === value)
     setFilterState((prev) => ({ ...prev, selectedPropertyName: value, selectedPropertyCode: propertyCode?.code || "" }));
-  }, []);
+  };
 
   const handlePeriodChange = useCallback((value: string): void => {
     setFilterState((prev) => ({
