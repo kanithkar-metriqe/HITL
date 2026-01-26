@@ -8,13 +8,15 @@ import { useState } from 'react'
 import { Label } from '@radix-ui/react-label'
 import { postreject } from '../services/reject'
 import { getsubmitState } from '../services/send-approve'
+import QueryStateHandler from '@/components/ui/query-state-handler'
+import AgentDetailLoader from './loaders/agent-detail-loader'
 
 export default function AgentDetails() {
     const [resubmit, setResubmit] = useState("")
     const [inputSubmit, setInputValue] = useState("")
     const [inputStatus, setINputStatus] = useState(false)
     const [submitStatus, setsubmitStatus] = useState("")
-    const { data } = useQuery(getagentDetails(property_code.value))
+    const { data,error,isLoading } = useQuery(getagentDetails(property_code.value))
     const { data: newdata } = useQuery(getsubmitState(submitStatus))
     console.log(newdata)
     // console.log(newdata)
@@ -46,10 +48,12 @@ export default function AgentDetails() {
 
 
     return (
-        <div className="rounded-md bg-white xl:w-1/3 p-3">
+        <QueryStateHandler error={error} isLoading={isLoading} loadingFallback={<AgentDetailLoader />}>
+             <div className="rounded-md bg-white xl:w-1/3 p-3">
             {/* To & CC */}
             {
-                reqType.value !== "JE" && <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
+                reqType.value !== "JE" && 
+                <div className="flex w-full gap-5 bg-mt-gray-680 rounded-md px-3 py-3">
                     <div>
                         <Title intent="h5">To:</Title>
                         <span className='text-mt-normal'>
@@ -103,5 +107,7 @@ export default function AgentDetails() {
                 }
             </div>
         </div>
+        </QueryStateHandler>
+       
     )
 }
