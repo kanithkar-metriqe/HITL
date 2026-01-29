@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import Title from '@/components/ui/title'
 import { useQuery } from '@tanstack/react-query'
 import { getagentDetails } from '../services/agent-details'
-import { property_code, reqType } from '@/store/store'
+import { property_code, reqType, taskStatus, taskStatusText } from '@/store/store'
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { Label } from '@radix-ui/react-label'
@@ -19,7 +19,6 @@ export default function AgentDetails() {
     const { data,error,isLoading } = useQuery(getagentDetails(property_code.value))
     const { data: newdata } = useQuery(getsubmitState(submitStatus))
     console.log(newdata)
-    // console.log(newdata)
     const response = data
 
     const toUsers = response?.toemailusers ?? []
@@ -30,13 +29,27 @@ export default function AgentDetails() {
         postreject(inputSubmit)
     );
 
-    function handle() {
+    function handle(rejectValue:string) {
         setInputValue(resubmit);
         setResubmit("")
         setINputStatus(false)
+         if(rejectValue === "Resubmit"){
+            taskStatus.value = true
+            taskStatusText.value = "The request has been resubmitted successfully." 
+        }else if (rejectValue === "Reject"){
+             taskStatus.value = true
+            taskStatusText.value = "The request has been rejected successfully." 
+        }
     }
 
-    function handleSubmit() {
+    function handleSubmit(buttonName:string) {
+        if(buttonName === "Send Mail"){
+            taskStatus.value = true
+            taskStatusText.value = "The email has been sent successfully." 
+        }else if (buttonName === "Approve"){
+             taskStatus.value = true
+            taskStatusText.value = "The request has been approved successfully." 
+        }
         setsubmitStatus("JE")
     }
 
@@ -44,7 +57,6 @@ export default function AgentDetails() {
     const approveValue = reqType.value === "JE" ? "Approve" : "Send Mail"
     const dataVal = reqType.value === "JE" ? "Analysis" : "Email Content";
     // const dataVal = reqType.value;
-    console.log(reqType.value, "reqType.value");
 
 
     return (
@@ -98,10 +110,10 @@ export default function AgentDetails() {
                     </Button>
                 }
                 {
-                    inputStatus === false ? <Button className="cursor-pointer transition-all" variant="ghost" onClick={() => setINputStatus(true)}>{rejectValue}</Button> : <Button className="cursor-pointer transition-all" variant="ghost" onClick={handle}>{ reqType.value === "JE" ? "Reject" : "Resubmit"}</Button>
+                    inputStatus === false ? <Button className="cursor-pointer transition-all" variant="ghost" onClick={() => setINputStatus(true)}>{rejectValue}</Button> : <Button className="cursor-pointer transition-all" variant="ghost" onClick={(e) => handle((e.target as HTMLButtonElement).innerHTML ?? "")}>{ reqType.value === "JE" ? "Reject" : "Resubmit"}</Button>
                 }
                 {
-                    !inputStatus && <Button variant="default" className="ml-3" onClick={handleSubmit}>
+                    !inputStatus && <Button variant="default" className="ml-3" onClick={() =>handleSubmit(approveValue)}>
                         {approveValue}
                     </Button>
                 }

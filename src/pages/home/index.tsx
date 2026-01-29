@@ -10,6 +10,7 @@ import {
   reqType,
   responseId,
   taskStatus,
+  taskStatusText,
   trackingIdSignal,
 } from "@/store/store";
 import { cn } from "@/lib/utils";
@@ -47,7 +48,7 @@ export default function Home() {
         taskStatus.value ? <div className="h-[98dvh] flex items-center justify-center">
           <Title className="text-center font-semibold text-[30px] pb-15" intent="h6">
             <TickMarkCircle className="w-12 h-12 mr-3 text-green-700 bg-transparent inline-block" />
-            Request already processed, Please contact your administartor
+            {taskStatusText.value}
           </Title>
         </div> : <div
           className={cn(
