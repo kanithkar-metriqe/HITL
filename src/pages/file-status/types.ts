@@ -13,6 +13,8 @@ interface ReportFile {
     id: string;
     fileName: string;
     uploadDate: string;
+    uploadDay: string;
+    uploadTime: string;
     downloadUrl: string;
 }
 

@@ -42,7 +42,7 @@ const ReportsTable: React.FC = (): ReactNode => {
         </button>
       ),
     }),
-    columnHelper.accessor("uploadDate", {
+     columnHelper.accessor("uploadDate", {
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -54,6 +54,31 @@ const ReportsTable: React.FC = (): ReactNode => {
       ),
       cell: (info) => info.getValue(),
     }),
+     columnHelper.accessor("uploadTime", {
+      header: ({ column }) => (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center gap-2 hover:text-blue-600"
+        >
+          Upload Time
+          <ArrowUpDown size={14} className="opacity-50" />
+        </button>
+      ),
+      cell: (info) => info.getValue(),
+    }),
+      columnHelper.accessor("uploadDay", {
+      header: ({ column }) => (
+        <button
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex items-center gap-2 hover:text-blue-600"
+        >
+          Upload Day
+          <ArrowUpDown size={14} className="opacity-50" />
+        </button>
+      ),
+      cell: (info) => info.getValue(),
+    }),
+   
   ];
 
   const table = useReactTable({
