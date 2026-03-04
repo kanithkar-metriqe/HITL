@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Bot, SendHorizonal, User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { askQuestion, getQueryResult } from "@/pages/query/services";
+import { askQuestion, getQueryResult, type ConversationTurn } from "@/pages/query/services";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -97,7 +97,8 @@ const QueryChatWidget: React.FC = () => {
   };
 
   const { mutate, isPending: isSubmitting } = useMutation({
-    mutationFn: ({ q }: { q: string }) => askQuestion(q),
+    mutationFn: ({ q, history }: { q: string; history: ConversationTurn[] }) =>
+      askQuestion(q, undefined, history),
     onSuccess: (data) => {
       const tempId = lastTempIdRef.current;
       setMessages((prev) =>
@@ -170,7 +171,12 @@ const QueryChatWidget: React.FC = () => {
     setQuestion("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
 
-    mutate({ q: trimmed });
+    const history: ConversationTurn[] = messages
+      .filter((m) => m.status === "completed" && m.answer)
+      .slice(-5)
+      .map((m) => ({ question: m.question, answer: m.answer! }));
+
+    mutate({ q: trimmed, history });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

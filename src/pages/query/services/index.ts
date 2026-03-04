@@ -20,13 +20,20 @@ export interface QueryResult {
 
 // ── API calls ──────────────────────────────────────────────────────────────
 
+export interface ConversationTurn {
+  question: string;
+  answer: string;
+}
+
 export async function askQuestion(
   question: string,
-  propertyCode?: string
+  propertyCode?: string,
+  conversationHistory?: ConversationTurn[]
 ): Promise<AskResponse> {
   const { data } = await QUERY_API.post<AskResponse>("/ask", {
     question,
     ...(propertyCode ? { propertyCode } : {}),
+    ...(conversationHistory?.length ? { conversationHistory } : {}),
   });
   return data;
 }

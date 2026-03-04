@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Bot, SendHorizonal, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { askQuestion, getQueryResult } from "./services";
+import { askQuestion, getQueryResult, type ConversationTurn } from "./services";
 import metLogo from "../../../public/met-logo.png";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -110,8 +110,8 @@ const QueryPage: React.FC = () => {
 
   // Mutation: submit question
   const { mutate, isPending: isSubmitting } = useMutation({
-    mutationFn: ({ q, pc }: { q: string; pc: string }) =>
-      askQuestion(q, pc || undefined),
+    mutationFn: ({ q, pc, history }: { q: string; pc: string; history: ConversationTurn[] }) =>
+      askQuestion(q, pc || undefined, history),
     onSuccess: (data) => {
       const tempId = lastTempIdRef.current;
       setMessages((prev) =>
@@ -193,7 +193,12 @@ const QueryPage: React.FC = () => {
       textareaRef.current.style.height = "auto";
     }
 
-    mutate({ q: trimmed, pc: propertyCode });
+    const history: ConversationTurn[] = messages
+      .filter((m) => m.status === "completed" && m.answer)
+      .slice(-5)
+      .map((m) => ({ question: m.question, answer: m.answer! }));
+
+    mutate({ q: trimmed, pc: propertyCode, history });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
