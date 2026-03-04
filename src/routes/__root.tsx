@@ -4,6 +4,7 @@ import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
 
 import NotFound from "@/pages/not-found";
 import { Slide, ToastContainer } from "react-toastify";
+import QueryChatWidget from "@/components/QueryChatWidget";
 
 
 export const Route = createRootRoute({
@@ -24,7 +25,7 @@ export const Route = createRootRoute({
       <HeadContent />
 
       <Outlet />
-
+      <QueryChatWidget />
     </>
   ),
   notFoundComponent: () => <NotFound />,
