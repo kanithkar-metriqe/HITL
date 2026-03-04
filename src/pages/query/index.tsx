@@ -94,6 +94,7 @@ const QueryPage: React.FC = () => {
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lastTempIdRef = useRef<string | null>(null);
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -111,11 +112,11 @@ const QueryPage: React.FC = () => {
   const { mutate, isPending: isSubmitting } = useMutation({
     mutationFn: ({ q, pc }: { q: string; pc: string }) =>
       askQuestion(q, pc || undefined),
-    onSuccess: (data, _vars) => {
-      const msgId = data.trackingId;
+    onSuccess: (data) => {
+      const tempId = lastTempIdRef.current;
       setMessages((prev) =>
         prev.map((m) =>
-          m.id === msgId ? { ...m, trackingId: data.trackingId } : m
+          m.id === tempId ? { ...m, trackingId: data.trackingId } : m
         )
       );
       setPollingId(data.trackingId);
@@ -185,6 +186,7 @@ const QueryPage: React.FC = () => {
       status: "pending",
       timestamp: new Date(),
     };
+    lastTempIdRef.current = tempId;
     setMessages((prev) => [...prev, userMsg]);
     setQuestion("");
     if (textareaRef.current) {
