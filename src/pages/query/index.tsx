@@ -86,9 +86,9 @@ const AgentBubble: React.FC<{
 
 // ── Polling hook ───────────────────────────────────────────────────────────
 
-function usePollResult(
+function _usePollResult(
   trackingId: string | null,
-  onDone: (trackingId: string, answer: string, status: "completed" | "error") => void
+  _onDone: (trackingId: string, answer: string, status: "completed" | "error") => void
 ) {
   useQuery({
     queryKey: ["query-result", trackingId],
@@ -135,7 +135,7 @@ const QueryPage: React.FC = () => {
   const { mutate, isPending: isSubmitting } = useMutation({
     mutationFn: ({ q, pc }: { q: string; pc: string }) =>
       askQuestion(q, pc || undefined),
-    onSuccess: (data, vars) => {
+    onSuccess: (data, _vars) => {
       const msgId = data.trackingId;
       setMessages((prev) =>
         prev.map((m) =>
@@ -144,7 +144,7 @@ const QueryPage: React.FC = () => {
       );
       setPollingId(data.trackingId);
     },
-    onError: (_err, vars) => {
+    onError: (_err, _vars) => {
       // Mark the last pending message as error
       setMessages((prev) => {
         const idx = [...prev].reverse().findIndex((m) => m.status === "pending");
