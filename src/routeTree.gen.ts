@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FileStatusRouteImport } from './routes/file-status'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QueryRouteImport } from './routes/query'
 
 const FileStatusRoute = FileStatusRouteImport.update({
   id: '/file-status',
@@ -22,31 +23,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QueryRoute = QueryRouteImport.update({
+  id: '/query',
+  path: '/query',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/file-status': typeof FileStatusRoute
+  '/query': typeof QueryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/file-status': typeof FileStatusRoute
+  '/query': typeof QueryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/file-status': typeof FileStatusRoute
+  '/query': typeof QueryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/file-status'
+  fullPaths: '/' | '/file-status' | '/query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/file-status'
-  id: '__root__' | '/' | '/file-status'
+  to: '/' | '/file-status' | '/query'
+  id: '__root__' | '/' | '/file-status' | '/query'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FileStatusRoute: typeof FileStatusRoute
+  QueryRoute: typeof QueryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/query': {
+      id: '/query'
+      path: '/query'
+      fullPath: '/query'
+      preLoaderRoute: typeof QueryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FileStatusRoute: FileStatusRoute,
+  QueryRoute: QueryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
