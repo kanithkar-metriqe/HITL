@@ -84,30 +84,6 @@ const AgentBubble: React.FC<{
   </div>
 );
 
-// ── Polling hook ───────────────────────────────────────────────────────────
-
-function _usePollResult(
-  trackingId: string | null,
-  _onDone: (trackingId: string, answer: string, status: "completed" | "error") => void
-) {
-  useQuery({
-    queryKey: ["query-result", trackingId],
-    queryFn: () => getQueryResult(trackingId!),
-    enabled: !!trackingId,
-    refetchInterval: (query) => {
-      const status = query.state.data?.status;
-      if (status === "completed" || status === "error") return false;
-      return 2000;
-    },
-    refetchIntervalInBackground: true,
-    select: (data) => data,
-    // Surface completed/error state via effect below
-  });
-
-  // We need the data in an effect — useQuery doesn't expose it outside,
-  // so use a separate state-based approach:
-}
-
 // ── Main page ──────────────────────────────────────────────────────────────
 
 const QueryPage: React.FC = () => {
