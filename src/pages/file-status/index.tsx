@@ -1,7 +1,7 @@
 import React, { useState, type ReactNode, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getFileStatusGrid, getPropertyOptions, triggerDca } from "./services";
+import { getFileStatusGrid, getPropertyOptions, getReportsGrid, triggerDca } from "./services";
 import type {
   DropdownOption,
   FilterSectionState,
@@ -60,7 +60,7 @@ const FilterSection: React.FC = (): ReactNode => {
   ];
 
   const handleNameChange = (value: string): void => {
-    
+
     const propertyCode = propertyOptions?.find((x)=>x.value === value)
     setFilterState((prev) => ({ ...prev, selectedPropertyName: value, selectedPropertyCode: propertyCode?.code || "" }));
   };
@@ -191,12 +191,12 @@ const FilterSection: React.FC = (): ReactNode => {
         onClick={() => onSubmitTasks.mutate()}
         disabled={!isAllSelected || onSubmitTasks.isPending}
         className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
-          isAllSelected
+          isAllSelected && !onSubmitTasks.isPending
             ? "bg-blue-600 text-white hover:bg-blue-700"
             : "bg-gray-200 text-gray-500 cursor-not-allowed"
         }`}
       >
-        Submit
+        {onSubmitTasks.isPending ? "Submitting..." : "Submit"}
       </button>
     </div>
   );
@@ -216,6 +216,8 @@ const Dashboard: React.FC = (): ReactNode => {
   /* ------------------------------ API Function ------------------------------ */
   const { data: fileStatusGrid, isFetching: isFileStatusGridFetching } =
     useQuery(getFileStatusGrid());
+
+  const { data: reportsData = [] } = useQuery(getReportsGrid());
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">

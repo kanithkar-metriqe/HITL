@@ -28,7 +28,6 @@ export function getPropertyOptions() {
       } catch (err: unknown) {
         const error = err as XiorError;
         if (error?.response?.status === 404) {
-          // Normalize 404 -> empty array
           return [];
         }
         throw error;

@@ -9,10 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as QueryRouteImport } from './routes/query'
 import { Route as FileStatusRouteImport } from './routes/file-status'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as QueryRouteImport } from './routes/query'
 
+const QueryRoute = QueryRouteImport.update({
+  id: '/query',
+  path: '/query',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FileStatusRoute = FileStatusRouteImport.update({
   id: '/file-status',
   path: '/file-status',
@@ -21,11 +26,6 @@ const FileStatusRoute = FileStatusRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QueryRoute = QueryRouteImport.update({
-  id: '/query',
-  path: '/query',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -61,6 +61,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/query': {
+      id: '/query'
+      path: '/query'
+      fullPath: '/query'
+      preLoaderRoute: typeof QueryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/file-status': {
       id: '/file-status'
       path: '/file-status'
@@ -73,13 +80,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/query': {
-      id: '/query'
-      path: '/query'
-      fullPath: '/query'
-      preLoaderRoute: typeof QueryRouteImport
       parentRoute: typeof rootRouteImport
     }
   }

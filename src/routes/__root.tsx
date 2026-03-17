@@ -1,5 +1,5 @@
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Outlet, useMatchRoute } from "@tanstack/react-router";
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import NotFound from "@/pages/not-found";
@@ -8,25 +8,30 @@ import QueryChatWidget from "@/components/QueryChatWidget";
 
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <ToastContainer
-        autoClose={5000}
-        closeButton={false}
-        className="bg-none"
-        draggable
-        hideProgressBar={true}
-        newestOnTop
-        pauseOnHover
-        position="top-center"
-        toastClassName=" text-gray-800 bg-none p-0"
-        transition={Slide}
-      />
-      <HeadContent />
+  component: function RootComponent() {
+    const matchRoute = useMatchRoute();
+    const isQueryPage = matchRoute({ to: "/query" });
 
-      <Outlet />
-      <QueryChatWidget />
-    </>
-  ),
+    return (
+      <>
+        <ToastContainer
+          autoClose={5000}
+          closeButton={false}
+          className="bg-none"
+          draggable
+          hideProgressBar={true}
+          newestOnTop
+          pauseOnHover
+          position="top-center"
+          toastClassName=" text-gray-800 bg-none p-0"
+          transition={Slide}
+        />
+        <HeadContent />
+
+        <Outlet />
+        {!isQueryPage && <QueryChatWidget />}
+      </>
+    );
+  },
   notFoundComponent: () => <NotFound />,
 });
