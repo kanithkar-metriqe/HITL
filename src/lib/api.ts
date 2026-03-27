@@ -11,6 +11,7 @@ interface ApiConfig {
 type ApiInstanceName =
   | "HITL_API"
   | "HITL_FILE_STATUS_API"
+  | "QUERY_API"
 
 // ========== API CONFIGURATION MAP ==========
 const API_CONFIGS: Record<ApiInstanceName, ApiConfig> = {
@@ -21,6 +22,10 @@ const API_CONFIGS: Record<ApiInstanceName, ApiConfig> = {
   HITL_FILE_STATUS_API: {
     baseURL: ENV.HITL_FILE_STATUS_API_URL,
     timeout: 30000,
+  },
+  QUERY_API: {
+    baseURL: ENV.QUERY_API_URL,
+    timeout: 60000,
   },
 };
 
@@ -74,11 +79,13 @@ const createApiInstance = (configName: ApiInstanceName): XiorInstance => {
 // ========== EXPORT API INSTANCES ==========
 export const HITL_API = createApiInstance("HITL_API");
 export const HITL_FILE_STATUS_API = createApiInstance("HITL_FILE_STATUS_API");
+export const QUERY_API = createApiInstance("QUERY_API");
 
 // ========== OPTIONAL: API REGISTRY FOR DYNAMIC ACCESS ==========
 const apiInstances: Record<ApiInstanceName, XiorInstance> = {
   HITL_API,
   HITL_FILE_STATUS_API,
+  QUERY_API,
 };
 
 export const getApiInstance = (name: ApiInstanceName): XiorInstance => {
