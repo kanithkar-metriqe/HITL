@@ -217,7 +217,7 @@ const Dashboard: React.FC = (): ReactNode => {
   const { data: fileStatusGrid, isFetching: isFileStatusGridFetching } =
     useQuery(getFileStatusGrid());
 
-  const { data: reportsData = [] } = useQuery(getReportsGrid());
+  useQuery(getReportsGrid());
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
