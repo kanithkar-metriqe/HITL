@@ -33,5 +33,6 @@ export function getglTable(property_code: string) {
   return queryOptions({
     queryKey: ["hitl-gl-details", property_code],
     queryFn: glTable,
+    enabled:!!property_code,
   });
 }

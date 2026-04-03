@@ -2,6 +2,8 @@ import Title from "@/components/ui/title";
 import { useQuery } from "@tanstack/react-query";
 import { getApprovalDetails } from "../services/approval-api";
 import { property_code } from "@/store/store";
+import LoaderApproval from "./loaders/approval";
+import QueryStateHandler from "@/components/ui/query-state-handler";
 
 // const newdata = {
 //     "responseId": 54,
@@ -12,13 +14,17 @@ import { property_code } from "@/store/store";
 // }
 
 export default function ApprovalDetails() {
-  const { data: newdata } = useQuery(getApprovalDetails(property_code.value));
+  const { data: newdata, error, isLoading } = useQuery(getApprovalDetails(property_code.value));
 
   return (
     <>
-      <Title intent="h6" className="pb-4 font-semibold">
+     <Title intent="h6" className="pb-4 font-semibold">
         Approvals
       </Title>
+    <QueryStateHandler error={error} isLoading={isLoading} loadingFallback={<LoaderApproval />}>
+
+   
+     
       <div className="bg-white rounded-lg flex justify-between items-center">
         <div className="grid grid-cols-2 md:flex  gap-8 py-4   px-5">
           <div className="">
@@ -50,14 +56,15 @@ export default function ApprovalDetails() {
           </div>
         </div>
         <div className="px-5 ">
-          <div className="text-normal-gray text-[15px] font-semibold">
+          <div className="text-[15px] font-semibold">
             Property Code
           </div>
-          <Title intent={"h5"} className="font-normal">
+          <Title intent={"h5"} className="font-normal text-right">
             {property_code.value}
           </Title>
         </div>
       </div>
+       </QueryStateHandler>
     </>
   );
 }

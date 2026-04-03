@@ -52,7 +52,7 @@ export default function Home() {
         </div> : <div
           className={cn(
             "p-5 bg-neutral",
-            reqType.value === "JE" ? "h-full" : "h-dvh"
+            reqType.value === "JE" ? "h-full" : "h-dvh overflow-auto"
           )}
         >
           <ApprovalDetails />
