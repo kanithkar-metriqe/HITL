@@ -1,5 +1,5 @@
 import { HITL_API } from "@/lib/api";
-import { reqType, responseId, taskStatus } from "@/store/store";
+import { reqType, responseId, taskStatus, taskStatusText } from "@/store/store";
 import { queryOptions } from "@tanstack/react-query";
 
 
@@ -27,6 +27,7 @@ async function approvalDetails(): Promise<HitlCase> {
   reqType.value = data.data?.category === "JE Posting" ? "JE" : "Mail";
   if(!data.success){
     taskStatus.value = true;
+    taskStatusText.value = "Request already processed, Please contact your administartor";
   }
   return data.data;
 }
